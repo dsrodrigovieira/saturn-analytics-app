@@ -8,6 +8,7 @@
     --main-color: #567c8d;
     --content-sep-color: rgba(86, 124, 141, 0.573);
     --header-drop-shadow: 10px 5px 10px rgba(13, 39, 80, 0.4), -5px -10px 23px rgba(255, 255, 255);
+    --header-item-active-shadow: -10px -10px 10px rgba(255, 255, 255, 0.7) inset, 10px 10px 10px rgba(133, 133, 143, 0.3) inset;
     --menu-drop-shadow: 5px 5px 20px rgba(13, 39, 80, 0.4), -5px -5px 15px rgba(106, 162, 187, 0.6);
     --content-drop-shadow: 0 0 30px rgba(13, 39, 80, 0.1);
     --content-hover-shadow: 0 0 30px rgba(13, 39, 80, 0.2);   
@@ -56,7 +57,11 @@ html, body {
 
 .header-icon svg:hover {
     cursor: pointer;
-    box-shadow: var(--header-drop-shadow)
+    box-shadow: var(--header-drop-shadow);
+}
+
+.header-icon-active {
+    box-shadow: var(--header-item-active-shadow);
 }
 
 /* MAIN CONTAINER */
@@ -230,4 +235,55 @@ html, body {
 .footer-info h5 {
     padding: 0;
     margin: 0;
+}
+
+/* MODAL */
+dialog {
+    padding: 0;
+    border: 0px hidden;
+    border-radius: 10px;
+    width: 300px;
+    height: 400px;
+    justify-content: center;    
+    color: var(--main-bg-color);
+    background-color: rgba(86, 124, 141, 0.4);
+    backdrop-filter: blur(0.1rem);
+}
+  
+.wrapper {
+    padding: 16px;
+    padding-bottom: 0;
+    height: 384px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.notification-header {
+    width: 100%;
+    height: 25px;
+    margin-bottom: 15px;
+}
+
+.notification-items {
+    height: 100%;
+    display: flex;
+    flex-direction: column;    
+}
+
+.notification-close {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.notification-close svg {
+    fill: var(--main-bg-color);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.wrapper h3 {
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
