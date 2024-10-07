@@ -35,6 +35,7 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 
 .header-icon {
@@ -131,7 +132,7 @@ html, body {
 /* CONTENT AREA */
 .main-content{
     display: grid;
-    grid-template-rows: 40px 100px auto;
+    grid-template-rows: 40px auto;
     background-color: var(--main-bg-color);
     width: calc(100% - 290px);
     padding: 0 10px;
@@ -142,22 +143,55 @@ html, body {
 .section-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 40px;
     padding-left: 10px;
-    border: 1px hidden; 
-    border-radius: 10px;
 }
 
-.section-header a {
+.section-title {
+    display: inherit;
+    height: inherit;
+}
+
+.section-title a {
     font-weight: bold;
     font-size: 1.2rem;
 }
+
+.section-filters select {
+    background-color: inherit;
+    font-family: inherit;
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    height: 30px;
+    width: 170px;
+    padding: 0 5px;
+    margin-left: 5px;
+    box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.7) inset,
+                5px 5px 10px rgba(174, 174, 192, 0.5) inset;   
+}   
+
+.section-filters a {
+    margin-left: 15px;  
+}   
+
+.section-filters a:first-of-type {
+    font-weight: bold;
+}   
 
 .section-sep {
     width: 2px;
     height: 70%;
     margin: 0 5px;
     background-color: var(--content-sep-color);
+}
+
+.section-body {
+    height: inherit;
+    display: grid;
+    grid-template-rows: auto;
+    row-gap: 10px;
 }
 
 /* CONTENT CARDS */
@@ -196,27 +230,65 @@ html, body {
 }
 
 /* CONTENT CHARTS */
-.section-plots {            
-    display: grid;
-    grid-template-rows: repeat(2,1fr);
-    grid-template-columns: repeat(2,1fr);
+.section-plots-ans {            
+    display: grid;    
+    grid-template-rows: repeat(3,1fr);
+    grid-template-columns: repeat(5,1fr);
     gap: 10px;        
 }
 
 .plot {
-    width: 100%;
-    height: 100%;
+    padding: 3px;
     display: grid;
-    align-items: center;
-    justify-content: center;
+    grid-template-rows: 1fr auto;
     border: 1px hidden; 
-    color: var(--main-bg-color);
+    color: var(--main-color);
     border-radius: 10px;
     box-shadow: var(--content-drop-shadow)
 }
 
 .plot svg {
     fill: var(--main-color);
+}
+
+.plot-header {
+    display: grid;
+    grid-template-columns: auto 30px;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.plot-header svg {    
+    cursor: pointer;
+    justify-self: end;
+}
+
+.plot-value {
+    display: flex;    
+    justify-content:space-between;
+    align-items: center;    
+    padding: 0 75px;
+    margin-bottom: 30px;   
+}
+
+.plot-value h1, .value h1 {
+    font-size: 3rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.plot-value a {
+    font-size: 0.7rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.plot-value p {
+    font-size: 0.7rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    line-height: 0.9rem;
 }
 
 .card:hover, .plot:hover {
@@ -240,17 +312,18 @@ html, body {
 /* MODAL */
 dialog {
     padding: 0;
-    border: 0px hidden;
+    border: 1px solid rgba(86, 124, 141, 0.4);
     border-radius: 10px;
     width: 300px;
     height: 400px;
     justify-content: center;    
     color: var(--main-bg-color);
     background-color: rgba(86, 124, 141, 0.4);
-    backdrop-filter: blur(0.1rem);
+    backdrop-filter: blur(0.2rem);
 }
   
 .wrapper {
+    border: none;
     padding: 16px;
     padding-bottom: 0;
     height: 384px;
