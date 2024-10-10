@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #2f4856;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: Manrope,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    text-decoration: none;  
+    font-weight: bold;
+    color: inherit;
+}
+
+/* This is just to transition when you change the viewport size. */
+* {
+    transition: all 0.3s ease-out;
+}
+
+#container {
+    position: absolute;
+    min-width: 300px;
+    min-height: 300px;
+    z-index: 1;
+    border-radius: 10px;
+    background-color: rgb(236, 236, 236, 0.5);
+    box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2),
+                0 0 10px 10px rgba(255, 255, 255, 0.3) inset;
+}
+
+#login-body {
+    width: inherit;    
+}
+
+.input-text {
+    border-radius: 20px;
+    border: 1px solid rgba(86, 124, 141, 0.6);
+    height: 35px;
+    width: inherit;
+    padding: 0 10px;
+    text-align: center;
+}
+
+.container-sign {
+    display: grid;
+    grid-template-areas:
+    'login-header'
+    'login-body';
+    grid-auto-rows: 100px 180px;
+    width: 280px;
+    height: 280px;
+    justify-items: center;
+    padding: 20px;
+    align-items:center;
+}
+
+.sign-options {
+    display: grid;
+    grid-template-rows: 70px 50px;
+    row-gap: 10px;
+    width: inherit;
+}
+
+.container-login {
+    position: absolute;
+    display: grid;
+    grid-template-areas:
+    'login-form-body'
+    'form-footer';
+    grid-auto-rows: 100px 80px;
+    margin-top: 80px;
+    height: 180px;
+    width: 280px;
+    align-items:center;
+    row-gap: 15px;
+}
+
+.login-form-body {
+    display: grid;
+    grid-template-areas:
+    'input-email'
+    'input-pw';
+    row-gap: 10px;
+}
+
+.btn-login {
+    color: #ececec;
+    background-color: #2f4856;
+    border-radius: 40px;
+    align-content: center;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.btn-login-active {
+    font-size: 1.5rem;
+    transform: translateY(-120px) !important;
+    background-color: rgba(255, 255, 255, 0) !important;
+    box-shadow: none !important;
+    border: none !important;
+    color: #2f4856 !important;    
+}
+
+.btn-login-fade {
+    transform: translateY(50px);
+    opacity: 0 ;
+}
+
+.container-register {
+    display: grid;
+    grid-template-areas:
+    'register-form-body'
+    'form-footer';
+    grid-auto-rows: 200px 80px;
+    margin-top: 70px;
+    width: 280px;
+    height: 300px;
+    padding: 20px;
+    align-items:center;
+    row-gap: 40px;
+}
+
+.register-form-body {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    row-gap: 10px;
+}
+
+.btn-register {
+    color: #ececec;
+    background-color: #567c8d;
+    border-radius: 30px;
+    align-content: center;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-register-active {
+    font-size: 1.5rem;
+    transform: translateY(-200px) !important;
+    background-color: rgba(255, 255, 255, 0) !important;
+    box-shadow: none !important;
+    border: none !important;
+    color: #2f4856 !important;    
+}
+
+.btn-register-fade {
+    transform: translateY(50px);
+    opacity: 0 ;
+}
+
+.form-footer {
+    display: grid;
+    row-gap: 10px;
+    justify-items: center;
+}
+
+.form-btn {
+    width: 180px;
+    padding: 10px 0;
+    font-size: 1.1rem;
+    border: none;
+    background-color: #2f4856;
+    color: #ececec;
+    border-radius: 20px;  
+    cursor: pointer;  
+}
+
+.login-header {
+    font-size: 1.5rem;
+    color: #2f4856;
+}
+
+.login-header-fade {
+    transform: translateY(-50px);
+    opacity: 0 ;
+}
+
+.btn-login:hover, .btn-register:hover {
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.15);
+    transform: scale(1.05);
+}   
+
+.container-hide {
+    opacity: 0;
+}
+
+.container-show {
+    opacity: 1;
+    z-index: 1;
+}
+
+.btn-cancel {
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+.container-size {
+    height: 450px;
+}
+
+/* BACKGROUND ANIMATION */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.gradient {                        
+    --size: 300px;
+    --speed: 8s;
+    --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8);
+
+    position: absolute;
+    z-index: -1;
+    width: var(--size);
+    height: var(--size);
+    filter: blur(calc(var(--size) / 8));
+    background: linear-gradient(rgb(67, 119, 239), rgb(123, 239, 208));
+    animation: rotate var(--speed) var(--easing) alternate infinite;
+    border-radius: 5% 80% 20% 30% / 30% 30% 70% 70%;
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+
+@media (min-width: 720px) {
+    .gradient {
+        --size: 500px;
+    }
+
+    #container {
+        width: 500px;
+    }
+
+    .container-sign, .container-login, .container-register {
+        width: 460px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .gradient {      
+        --size: 400px;
+
+        margin-left: 500px;
+        width: var(--size);
+        height: var(--size);
+    }
+
+    #container {
+        margin-right: 700px;
+    }
+
+    .container-sign, .container-login, .container-register {
+        margin-right: 700px;
+    }
+
+    .btn-login {
+        cursor: pointer;
+        transition: scale 0.5s ease-in-out
+    }
+
+    .btn-login:hover {
+        scale: 101%;
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #input:hover {
+        box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.35);
+    }
+
+}
