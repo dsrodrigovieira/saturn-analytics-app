@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">    
+    <title>Login</title>
+</head>
+<body>
+    <div class="gradient"></div>  
+    <div id="container">
+        <div id="item-sign" class="container-sign">
+            <section id="login-header" class="login-header">
+                <a>Bem-vindo</a>
+            </section>
+            <section id="login-body">
+                <div class="sign-options">
+                    <div id="btn-login" class="btn-login">
+                        <a>Login</a>
+                    </div>
+                    <div id="btn-register" class="btn-register">
+                        <a>Cadastrar</a>
+                    </div>                                    
+                </div>
+            </section>
+        </div>        
+    </div>
+
+    <div id="item-login" class="container-login container-hide">
+        <section class="login-form-body">
+            <input type="email" placeholder="E-mail" name="user-email" id="user-email" class="input-text">
+            <input type="password" placeholder="Senha" name="user-pw" id="user-pw" class="input-text">
+        </section>
+        <section class="form-footer">
+            <button type="submit" class="form-btn"><a href="home.html">Login</a></button> 
+            <div id="btn-cancel" class="btn-cancel">Cancelar</div>                
+        </section>                
+    </div>        
+    
+    <div id="item-register" class="container-register container-hide">
+        <section class="register-form-body">
+            <input type="text" placeholder="Nome" name="user-name" id="user-name" class="input-text">
+            <input type="text" placeholder="Sobrenome" name="user-surname" id="user-surname" class="input-text">
+            <input type="email" placeholder="E-mail" name="user-email" id="user-email" class="input-text">
+            <input type="password" placeholder="Senha" name="user-pw" id="user-pw" class="input-text">
+            <input type="password" placeholder="Confirme e senha" name="user-pw2" id="user-pw2" class="input-text">
+        </section>
+        <section class="form-footer">
+            <button type="submit" class="form-btn"><a href="index.html">Salvar</a></button> 
+            <div id="btn-cancel2" class="btn-cancel">Cancelar</div>                
+        </section>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
