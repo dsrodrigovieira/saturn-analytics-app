@@ -290,10 +290,11 @@ a {
 .dialog-hide {
     opacity: 0;
     scale: 0;
+    transform: translateY(300px);
 }
 
 .dialog-show {
-    transform: translateY(-150px) scale(1.1);
+    transform: translateY(-300px);
     opacity: 100;
 }
   
