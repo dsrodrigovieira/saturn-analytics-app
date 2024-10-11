@@ -255,19 +255,36 @@ a {
 
 @media (min-width: 1024px) {
     .gradient {      
-        --size: 400px;
+        --size: 800px;
 
-        margin-left: 500px;
+        margin-left: 400px;
         width: var(--size);
         height: var(--size);
     }
 
-    #container {
-        margin-right: 700px;
+    .btn-login {
+        cursor: pointer;
+        transition: scale 0.5s ease-in-out
     }
 
-    .container-sign, .container-login, .container-register {
-        margin-right: 700px;
+    .btn-login:hover {
+        scale: 101%;
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #input:hover {
+        box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.35);
+    }
+
+}
+
+@media (min-width: 1920px) {
+    .gradient {      
+        --size: 1000px;
+
+        margin-left: 800px;
+        width: var(--size);
+        height: var(--size);
     }
 
     .btn-login {
