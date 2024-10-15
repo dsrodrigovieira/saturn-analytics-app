@@ -88,6 +88,12 @@
     <!-- SCRIPT -->
     <script type="module" src="js/home.js"></script>
     <script type="module" src="js/data.js"></script>
+    <script>
+        let dialog = document.getElementById("dialog-info")
+        let wrapper = document.querySelector(".dialog-wrapper")
+        const showDialog = (show) => show ? [dialog.showModal(),dialog.classList.remove("dialog-hide"),dialog.classList.add("dialog-show")] : dialog.close()
+        dialog.addEventListener('click', (e) => !wrapper.contains(e.target) && [dialog.close(),dialog.classList.add("dialog-hide"),dialog.classList.remove("dialog-show")])
+    </script>
 
 </body>
 </html>
