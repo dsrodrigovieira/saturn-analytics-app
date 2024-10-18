@@ -286,18 +286,15 @@ a {
     color: var(--main-bg-color);
     background-color: rgba(86, 124, 141, 0.8);
     backdrop-filter: blur(0.2rem);
-    translate: 0 300px;
     transition: all 0.5s ease-in-out;
 }
 
 .dialog-hide {
     opacity: 0;
     scale: 0;
-    /* transform: translateY(300px); */
 }
 
 .dialog-show {
-    transform: translateY(-150px);
     opacity: 100;
 }
   
@@ -306,11 +303,11 @@ a {
     padding: 15px;
     display: grid;
     grid-auto-rows: repeat(2, auto);
+    
 }
 
 .dialog-info-header {
     width: 100%;
-    height: 25px;
 }
 
 .dialog-info-items {
@@ -324,6 +321,11 @@ a {
 }
 
 .dialog-wrapper h3 {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.dialog-wrapper h4 {
     margin-block-start: 0;
     margin-block-end: 0;
 }
