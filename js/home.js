@@ -3,10 +3,19 @@ import { filtro_anos, resultados_indicadores, indicadores_ans } from './data.js'
 let filter_year = document.getElementById("year")
 let filter_month = document.getElementById("month")
 let plots = document.getElementById("section-plots-ans")
-let indicador1 = document.getElementById("indicador1")
+let dialog = document.getElementById("dialog-info")
+let dialog_wrapper = document.getElementById("dialog-wrapper")
+let wrapper = document.querySelector(".dialog-wrapper")
+let plot_id = ""
 const variacao_c = `<i class="fa-solid fa-angles-up fa-2xl"></i>`
 const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-2xl"></i>`
 const variacao_n = `<i class="fa-solid fa-grip-lines fa-2xl"></i>`
+var operators = {
+    '>=': function (a, b){ return a>=b},
+    '<=': function (a, b){ return a<=b},
+    '>' : function (a, b){ return a>b},
+    '<' : function (a, b){ return a<b}
+ }
 
 // POPULAR FILTRO ANO
 let content_year = `<option value="">Selecione</option>`
@@ -33,16 +42,20 @@ filter_month.addEventListener('change', (e) => {
     let content_indicadores = `` 
     let r = resultados_indicadores.filter(obj => {return obj.ano == filter_year.value & obj.mes == filter_month.value})    
     for (let p of r[0].resultados) {                
-        let indicador = indicadores_ans.find(obj => {return obj.id === p.id})
+        let indicador = indicadores_ans.find(obj => {return obj.id === p.id})        
+        let oper = operators[indicador.direcao](p.valor, indicador.meta_valor)
+        let cor = oper ? "#28a745" : "#dc3545"        
+        // VERIFICA SE O VALOR SERA EXIBIDO EM 1 OU 2 LINHAS
         if (indicador.unidade == "%") {
-            if (p.variacao == "c") {
+            // VERIFICA DIREÇÃO DA TENDENCIA
+            if (p.variacao == "c") {                
                 content_indicadores += `
                 <div class="plot" id="plot${p.id}">
                     <div class="plot-header">
                         <a>${indicador.titulo}</a>
                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
                     </div>         
-                    <div class="plot-value">
+                    <div style="color:${cor};" class="plot-value">
                         <h1>${p.valor}${indicador.unidade}</h1>
                         ${variacao_c}
                     </div>
@@ -55,7 +68,7 @@ filter_month.addEventListener('change', (e) => {
                         <a>${indicador.titulo}</a>
                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
                     </div>         
-                    <div class="plot-value">
+                    <div style="color:${cor};" class="plot-value">
                         <h1>${p.valor}${indicador.unidade}</h1>
                         ${variacao_d}
                     </div>
@@ -68,7 +81,7 @@ filter_month.addEventListener('change', (e) => {
                         <a>${indicador.titulo}</a>
                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
                     </div>         
-                    <div class="plot-value">
+                    <div style="color:${cor};" class="plot-value">
                         <h1>${p.valor}${indicador.unidade}</h1>
                         ${variacao_n}
                     </div>
@@ -83,7 +96,7 @@ filter_month.addEventListener('change', (e) => {
                         <a>${indicador.titulo}</a>
                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
                     </div>         
-                    <div class="plot-value">
+                    <div style="color:${cor};" class="plot-value">
                         <div class="value">
                             <h1>${p.valor}</h1>
                             <p>${indicador.unidade}</p>
@@ -99,7 +112,7 @@ filter_month.addEventListener('change', (e) => {
                         <a>${indicador.titulo}</a>
                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
                     </div>         
-                    <div class="plot-value">
+                    <div style="color:${cor};" class="plot-value">
                         <div class="value">
                             <h1>${p.valor}</h1>
                             <p>${indicador.unidade}</p>
@@ -115,7 +128,7 @@ filter_month.addEventListener('change', (e) => {
                         <a>${indicador.titulo}</a>
                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
                     </div>         
-                    <div class="plot-value">
+                    <div style="color:${cor};" class="plot-value">
                         <div class="value">
                             <h1>${p.valor}</h1>
                             <p>${indicador.unidade}</p>
@@ -130,20 +143,38 @@ filter_month.addEventListener('change', (e) => {
     plots.innerHTML = content_indicadores;
 })
 
-indicador1.addEventListener('click', (e) => {
-    let content_dialog = ``
+// EXIBE MODAL
+function showDialog(show,kpi_id) {    
+    let info = indicadores_ans.filter(obj => {return obj.id == kpi_id})    
+    plot_id = document.getElementById(`plot${kpi_id}`)
+    let content_modal = ``
+    if (show) {
+        content_modal = `        
+            <div class="dialog-info-header">
+                <h4>${info[0].titulo}</h4>
+            </div>
+            <div class="dialog-info-items">
+                <p><b>Domínio:</b> ${info[0].dominio}</p>                        
+                <p style="text-align: justify;">${info[0].descricao}</p>
+                <p><b>Meta:</b> ${info[0].meta}</p>
+            </div>        
+        `        
+        plot_id.classList.add("plot-focus")
+        dialog.showModal()
+        dialog.classList.remove("dialog-hide")
+        dialog.classList.add("dialog-show")        
+    } 
+    dialog_wrapper.innerHTML = content_modal    
+}
 
-    `
-    <div class="dialog-info-header">
-        <h3>Proporção de Partos Vaginais</h3>
-    </div>
-    <div class="dialog-info-items">
-        <p><b>Domínio:</b> Efetividade</p>                        
-        <p style="text-align: justify;">O resultado do indicador reflete o percentual de partos normais realizados na
-            instituição no período de interesse. Percentuais maiores de parto normal são
-            desejáveis, pois há menores taxas de complicações relacionadas.</p>
-        <p><b>Meta:</b> ≥ 55% de partos vaginais.</p>
-    </div>
-    `
+// FECHA MODAL
+dialog.addEventListener('click', (e) => {
+    if (!wrapper.contains(e.target)) {
+        dialog.close()
+        dialog.classList.add("dialog-hide")
+        dialog.classList.remove("dialog-show")
+        plot_id.classList.remove("plot-focus")
+    }
 })
 
+window.showDialog = showDialog
