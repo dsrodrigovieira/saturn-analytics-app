@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/home.css">
-    <script src="https://kit.fontawesome.com/137e779fee.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/home.css">    
+    <script src="https://kit.fontawesome.com/137e779fee.js" crossorigin="anonymous"></script>    
     <title>Painel Assistencial - Home</title>
 </head>
 <body>
+    
     <!-- HEADER -->
     <div class="header-container">
         <div class="header-info">
             <h1 id="page-name">Painel de Indicadores</h2>
         </div>
     </div>
-
     <!-- MAIN -->
     <div class="main-container">
         <section class="main-content">               
@@ -49,51 +49,26 @@
             </div>           
         </section>
         <dialog id="dialog-info" class="dialog-hide">
-            <div class="dialog-wrapper">
-                <div class="dialog-info-header">
-                    <h3>Proporção de Partos Vaginais</h3>
-                </div>
-                <div class="dialog-info-items">
-                    <p><b>Domínio:</b> Efetividade</p>                        
-                    <p style="text-align: justify;">O resultado do indicador reflete o percentual de partos normais realizados na
-                        instituição no período de interesse. Percentuais maiores de parto normal são
-                        desejáveis, pois há menores taxas de complicações relacionadas.</p>
-                    <p><b>Meta:</b> ≥ 55% de partos vaginais.</p>
-                </div>
+            <div id="dialog-wrapper" class="dialog-wrapper">
             </div>
         </dialog>        
     </div>
-
     <!-- FOOTER -->
     <div class="footer-container">
         <div class="footer-menu">
-            <!-- menu -->
             <i class="fa-solid fa-bars fa-2xl"></i>
-            <!-- dark mode -->
             <i class="fa-solid fa-circle-half-stroke fa-2xl"></i>
-            <!-- notification -->
-            <i id="bell-icon" class="fa-solid fa-bell fa-2xl"></i>
-            <!-- profile -->
+            <i class="fa-solid fa-bell fa-2xl"></i>
             <i class="fa-solid fa-circle-user fa-2xl"></i>
-            <!-- settings -->
             <i class="fa-solid fa-gear fa-2xl"></i>
-            <!-- exit -->
             <a href="index.html"><i class="fa-solid fa-xmark fa-2xl"></i></a>
         </div>
         <div class="footer-info">
             <h5>Desenvolvido por <a href="https://github.com/dsrodrigovieira" target="_blank">Rodrigo Vieira</a>.<br>2024. Todos os direitos reservados.</h5>
         </div>
     </div>
-
     <!-- SCRIPT -->
     <script type="module" src="js/home.js"></script>
     <script type="module" src="js/data.js"></script>
-    <script>
-        let dialog = document.getElementById("dialog-info")
-        let wrapper = document.querySelector(".dialog-wrapper")
-        const showDialog = (show) => show ? [dialog.showModal(),dialog.classList.remove("dialog-hide"),dialog.classList.add("dialog-show")] : dialog.close()
-        dialog.addEventListener('click', (e) => !wrapper.contains(e.target) && [dialog.close(),dialog.classList.add("dialog-hide"),dialog.classList.remove("dialog-show")])
-    </script>
-
 </body>
 </html>
