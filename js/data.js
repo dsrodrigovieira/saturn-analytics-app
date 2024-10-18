@@ -40,7 +40,9 @@ export const indicadores_ans = [
         unidade: "%",
         dominio: "Efetividade",
         descricao: "O resultado do indicador reflete o percentual de partos normais realizados na instituição no período de interesse. Percentuais maiores de parto normal são desejáveis, pois há menores taxas de complicações relacionadas.",
-        meta: "≥ 55% de partos vaginais"
+        meta: "≥ 55% de partos vaginais",
+        meta_valor: 55,
+        direcao: ">="
     },
     {
         id: 2,
@@ -48,7 +50,9 @@ export const indicadores_ans = [
         unidade: "%",
         dominio: "Efetividade",
         descricao: "Refere-se ao número de pacientes que tiveram uma reinternação não programada na instituição em relação ao total de saídas do mês anterior ao mês de competência. Por exemplo: na competência de janeiro houve 1.000 saídas de internações. Destas, 50 apresentaram reinternações não programadas em até 30 dias após a alta. Desta forma, a competência de fevereiro será (50/1.000) x 100, ou seja, 5 reinternações não programadas a cada 100 internações do mês de janeiro. Altas proporções de reinternações podem ser reflexo das ações não resolutivas dos atendimentos aos pacientes.",
-        meta: "≤ 20%"
+        meta: "≤ 20%",
+        meta_valor: 20,
+        direcao: "<="
     },
     {
         id: 3,
@@ -56,7 +60,9 @@ export const indicadores_ans = [
         unidade: "/1000 pacientes-dia",
         dominio: "Efetividade",
         descricao: "Este indicador se refere ao número de casos de parada cardiorrespiratória a cada 1000 pacientes-dia hospitalizados na unidade de internação. Quanto menor a taxa, melhor.",
-        meta: "0"
+        meta: "0",
+        meta_valor: 0,
+        direcao: "<="
     },
     {
         id: 4,
@@ -64,7 +70,9 @@ export const indicadores_ans = [
         unidade: "%",
         dominio: "Efetividade",
         descricao: "O resultado do indicador reflete o percentual de óbitos institucionais no período de interesse. Quanto menor a taxa de mortalidade, melhor.",
-        meta: "< 3%"
+        meta: "< 3%",
+        meta_valor: 3,
+        direcao: "<"
     },
     {
         id: 5,
@@ -72,7 +80,9 @@ export const indicadores_ans = [
         unidade: "dias",
         dominio: "Eficiência",
         descricao: "O resultado do indicador representa a média de tempo que os pacientes permaneceram internados na instituição. Uma média baixa de tempo de internação é o mais desejável.",
-        meta: "≤ 5 dias"
+        meta: "≤ 5 dias",
+        meta_valor: 0,
+        direcao: "<="
     },
     {
         id: 6,
@@ -80,7 +90,9 @@ export const indicadores_ans = [
         unidade: "horas",
         dominio: "Eficiência",
         descricao: "O resultado do indicador representa a média de tempo que os pacientes permaneceram na unidade de emergência da instituição. Uma média baixa de tempo de permanência é o mais desejável.",
-        meta: "≤ 8 horas"
+        meta: "≤ 8 horas",
+        meta_valor: 8,
+        direcao: "<="
     },
     {
         id: 7,
@@ -88,7 +100,9 @@ export const indicadores_ans = [
         unidade: "minutos",
         dominio: "Eficiência",
         descricao: "O resultado do indicador representa a média do tempo de espera até o primeiro atendimento médico. Quanto menor a média, melhor.",
-        meta: "Nível 2: ≤ 10 minutos. Nível 3: ≤ 60 minutos."
+        meta: "Nível 2: ≤ 10 minutos. Nível 3: ≤ 60 minutos.",
+        meta_valor: 30,
+        direcao: "<="
     },
     {
         id: 8,
@@ -96,7 +110,9 @@ export const indicadores_ans = [
         unidade: "%",
         dominio: "Eficiência",
         descricao: "O resultado do indicador reflete o percentual de pacientes que, submetidos a cirurgias limpas, receberam profilaxia antibiótica no período de 1 hora ou menos de antecedência da incisão na pele. Quanto maior o percentual, melhor.",
-        meta: "≥ 90%"
+        meta: "≥ 90%",
+        meta_valor: 90,
+        direcao: ">="
     },
     {
         id: 9,
@@ -104,7 +120,9 @@ export const indicadores_ans = [
         unidade: "%",
         dominio: "Segurança",
         descricao: "O resultado do indicador reflete o percentual de pacientes que apresentaram infecção de sítio cirúrgico após serem submetidos a uma cirurgia limpa. Quanto menor a taxa de infecção de sítio cirúrgico, melhor.",
-        meta: "< 1%"
+        meta: "< 1%",
+        meta_valor: 1,
+        direcao: "<"
     },
     {
         id: 10,
@@ -112,7 +130,9 @@ export const indicadores_ans = [
         unidade: "/1000 pacientes-dia",
         dominio: "Segurança",
         descricao: "O resultado do indicador reflete o número de pacientes que apresentaram infecção primária de corrente sanguínea associada a cateter venoso central a cada 1000 pacientes que fazem uso de CVC. Quanto menor a taxa de infecção de corrente sanguínea associada a CVC, melhor.",
-        meta: "≤ 1 para cada 1000 pacientes CVC-dia."
+        meta: "≤ 1 para cada 1000 pacientes CVC-dia.",
+        meta_valor: 1,
+        direcao: "<="
     },
     {
         id: 11,
@@ -120,7 +140,9 @@ export const indicadores_ans = [
         unidade: "/1000 pacientes-dia",
         dominio: "Segurança",
         descricao: "O resultado do indicador reflete o número de pacientes que apresentaram infecção de trato urinário associada a cateter vesical de demora a cada 1000 pacientes que fazem uso de CVD. Quanto menor a taxa de infecção de trato urinário associada a CVD, melhor.",
-        meta: "≤ 2,7 para cada 1000 pacientes CVD-dia."
+        meta: "≤ 2,7 para cada 1000 pacientes CVD-dia.",
+        meta_valor: 2.7,
+        direcao: "<="
     },
     {
         id: 12,
@@ -128,7 +150,9 @@ export const indicadores_ans = [
         unidade: "%",
         dominio: "Segurança",
         descricao: "O resultado do indicador reflete o percentual de pacientes que receberam profilaxia para TEV em relação ao total de pacientes internados no mesmo período que apresentaram risco trombótico não baixo. Quanto maior o percentual, melhor.",
-        meta: "100%"
+        meta: "100%",
+        meta_valor: 100,
+        direcao: ">="
     },
     {
         id: 13,
@@ -136,7 +160,9 @@ export const indicadores_ans = [
         unidade: "/1000 pacientes-dia",
         dominio: "Segurança",
         descricao: "O resultado do indicador reflete o número de quedas que resultaram em danos a cada 1000 pacientes internados. Quanto menor a taxa, melhor.",
-        meta: "≤ 2,2 a cada 1.000 pacientes-dia."
+        meta: "≤ 2,2 a cada 1.000 pacientes-dia.",
+        meta_valor: 2.2,
+        direcao: "<="
     },
     {
         id: 14,
@@ -144,7 +170,9 @@ export const indicadores_ans = [
         unidade: "Número absoluto",
         dominio: "Segurança",
         descricao: "Refere-se ao total de pacientes internados que sofreram algum evento sentinela. Quanto menor, melhor.",
-        meta: "0"
+        meta: "0",
+        meta_valor: 0,
+        direcao: "<="
     }    
 ];
 
