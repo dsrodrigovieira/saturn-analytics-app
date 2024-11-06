@@ -6,6 +6,7 @@
     --content-height-diff: calc(var(--header-height) + var(--footer-height));
     --main-bg-color: #ececec;
     --main-color: #567c8d;
+    --secondary-color: #c8d9e6;
     --content-sep-color: rgba(86, 124, 141, 0.573);
     --header-drop-shadow: 10px 5px 10px rgba(13, 39, 80, 0.4), -5px -10px 23px rgba(255, 255, 255);
     --header-item-active-shadow: -10px -10px 10px rgba(255, 255, 255, 0.7) inset, 10px 10px 10px rgba(133, 133, 143, 0.3) inset;
@@ -231,6 +232,11 @@ a {
     padding: 10px;
 }
 
+.value {
+    display: grid;
+    justify-items: center;
+}
+
 /* FOOTER ELEMENTS */
 .footer-container {
     background-color: var(--main-color);
@@ -245,6 +251,7 @@ a {
 }
 
 .footer-menu {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -252,8 +259,34 @@ a {
     margin-bottom: 5px;
 }
 
-.footer-menu svg {  
-    fill: var(--main-bg-color);
+.footer-menu i {
+    padding: 20px 8px;
+}
+
+.footer-menu-item {
+    display: none;
+    background-color: var(--main-color);
+    border-radius: 20px;
+    position: absolute;
+    bottom: 63px;
+    color: var(--secondary-color);
+    z-index: 1;
+}
+
+.footer-menu-item:nth-of-type(3) {
+    left: 28%;
+}
+
+.footer-menu-item:first-of-type {
+    left: 5px;
+}
+
+.footer-menu-item a {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: bold;
+    align-self: center;
+    padding: 10px 20px;
 }
 
 .footer-info {

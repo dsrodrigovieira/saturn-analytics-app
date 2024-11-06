@@ -5,7 +5,13 @@ let filter_month = document.getElementById("month")
 let plots = document.getElementById("section-plots-ans")
 let dialog = document.getElementById("dialog-info")
 let dialog_wrapper = document.getElementById("dialog-wrapper")
+let main_content = document.getElementById("main-content")
 let wrapper = document.querySelector(".dialog-wrapper")
+let footer_menu = document.getElementById("footer-menu")
+let options_content = document.getElementById("options-content");
+let settings_content = document.getElementById("settings-content");
+let user_content = document.getElementById("user-content");
+let notification_content = document.getElementById("notification-content");
 let plot_id = ""
 const variacao_c = `<i class="fa-solid fa-angles-up fa-2xl"></i>`
 const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-2xl"></i>`
@@ -15,7 +21,7 @@ var operators = {
     '<=': function (a, b){ return a<=b},
     '>' : function (a, b){ return a>b},
     '<' : function (a, b){ return a<b}
- }
+}
 
 // POPULAR FILTRO ANO
 let content_year = `<option value="">Selecione</option>`
@@ -166,6 +172,7 @@ function showDialog(show,kpi_id) {
     } 
     dialog_wrapper.innerHTML = content_modal    
 }
+window.showDialog = showDialog
 
 // FECHA MODAL
 dialog.addEventListener('click', (e) => {
@@ -177,4 +184,14 @@ dialog.addEventListener('click', (e) => {
     }
 })
 
-window.showDialog = showDialog
+function showOptionsMenu() { options_content.style.display === "block" ? options_content.style.setProperty("display","none") : options_content.style.setProperty("display","block") }
+window.showOptionsMenu = showOptionsMenu
+
+function showSettingsMenu() { settings_content.style.display === "block" ? settings_content.style.setProperty("display","none") : settings_content.style.setProperty("display","block") }
+window.showSettingsMenu = showSettingsMenu
+
+function showUserMenu() { user_content.style.display === "block" ? user_content.style.setProperty("display","none") : user_content.style.setProperty("display","block") }
+window.showUserMenu = showUserMenu
+
+function showNotificationMenu() { notification_content.style.display === "block" ? notification_content.style.setProperty("display","none") : notification_content.style.setProperty("display","block") }
+window.showNotificationMenu = showNotificationMenu

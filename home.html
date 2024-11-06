@@ -55,12 +55,40 @@
     </div>
     <!-- FOOTER -->
     <div class="footer-container">
-        <div class="footer-menu">
-            <i class="fa-solid fa-bars fa-2xl"></i>
-            <i class="fa-solid fa-circle-half-stroke fa-2xl"></i>
-            <i class="fa-solid fa-bell fa-2xl"></i>
-            <i class="fa-solid fa-circle-user fa-2xl"></i>
-            <i class="fa-solid fa-gear fa-2xl"></i>
+        <div class="footer-menu" id="footer-menu">
+            <a href="#" class="menu-options" onclick="showOptionsMenu()">
+                <i class="fa-solid fa-bars fa-2xl"></i>
+            </a>            
+            <div id="options-content" class="footer-menu-item">
+                <a href="#">Início</a>
+                <a href="#">Indicadores</a>
+                <a href="#">Análise Crítica</a>
+            </div>  
+            <a href="#" class="menu-notification" onclick="showNotificationMenu()">
+                <i class="fa-solid fa-bell fa-2xl"></i>
+            </a>   
+            <div id="notification-content" class="footer-menu-item">
+                <a href="#">aaaaaaaaaaaaaaaaaa</a>
+                <a href="#">bbbbbbbbbbbbbbbbbb</a>
+                <a href="#">cccccccccccccccccc</a>
+                <a href="#">dddddddddddddddddd</a>
+            </div>            
+            <a href="#" class="menu-user" onclick="showUserMenu()">
+                <i class="fa-solid fa-circle-user fa-2xl"></i>    
+            </a>      
+            <div id="user-content" class="footer-menu-item">
+                <a href="#">Editar Perfil</a>
+                <a href="#">Alterar Senha</a>
+            </div>  
+            <a href="#" class="menu-settings" onclick="showSettingsMenu()">
+                <i class="fa-solid fa-gear fa-2xl"></i>
+            </a>
+            <div id="settings-content" class="footer-menu-item">
+                <a href="#">Configurações Gerais</a>
+                <a href="#">Controle de Acesso</a>
+                <a href="#">Configurações dos Indicadores</a>
+                <a href="#">Modo escuro</a>
+            </div>
             <a href="index.html"><i class="fa-solid fa-xmark fa-2xl"></i></a>
         </div>
         <div class="footer-info">
