@@ -186,12 +186,28 @@ dialog.addEventListener('click', (e) => {
 
 function showOptionsMenu() { options_content.style.display === "block" ? options_content.style.setProperty("display","none") : options_content.style.setProperty("display","block") }
 window.showOptionsMenu = showOptionsMenu
+// FECHA MENU
+options_content.addEventListener('click', (e) => {
+    options_content.style.setProperty("display","none")
+})
 
 function showSettingsMenu() { settings_content.style.display === "block" ? settings_content.style.setProperty("display","none") : settings_content.style.setProperty("display","block") }
 window.showSettingsMenu = showSettingsMenu
+// FECHA MENU
+settings_content.addEventListener('click', (e) => {
+    settings_content.style.setProperty("display","none")
+})
 
 function showUserMenu() { user_content.style.display === "block" ? user_content.style.setProperty("display","none") : user_content.style.setProperty("display","block") }
 window.showUserMenu = showUserMenu
+// FECHA MENU
+user_content.addEventListener('click', (e) => {
+    user_content.style.setProperty("display","none")
+})
 
 function showNotificationMenu() { notification_content.style.display === "block" ? notification_content.style.setProperty("display","none") : notification_content.style.setProperty("display","block") }
 window.showNotificationMenu = showNotificationMenu
+// FECHA MENU
+notification_content.addEventListener('click', (e) => {
+    notification_content.style.setProperty("display","none")
+})
