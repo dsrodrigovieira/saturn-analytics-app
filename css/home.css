@@ -2,7 +2,8 @@
 
 :root {
     --header-height: 70px;
-    --footer-height: 40px; 
+    --footer-height: 30px;
+    /* --footer-height: 55px; */
     --content-height-diff: calc(var(--header-height) + var(--footer-height));
     --main-bg-color: #ececec;
     --main-color: #567c8d;
@@ -30,7 +31,7 @@ body {
     'header-container'
     'main-container'
     'footer-container';
-    grid-auto-rows: 70px auto 120px;
+    grid-auto-rows: var(--header-height) auto var(--footer-height);
 }
 
 a {
@@ -242,10 +243,11 @@ a {
     background-color: var(--main-color);
     color: var(--main-bg-color);
     display: grid;
-    grid-template-areas:
+    /* grid-template-areas:
     'footer-menu'
     'footer-info';
-    grid-auto-rows: 70px 50px;
+    grid-auto-rows: 70px 50px; */
+    grid-row: auto;
     box-shadow: 0 -20px 30px rgba(13, 39, 80, 0.1);
     z-index: 1;
 }
@@ -290,11 +292,12 @@ a {
 }
 
 .footer-info {
-    align-self: self-end;
-    margin-bottom: 10px;
+    /* align-self: self-end; */
+    /* margin-bottom: 10px; */
+    align-self: center;
 }
 
-.footer-info h5 {
+.footer-info h6 {
     padding: 0;
     margin: 0;
     text-align: center;
@@ -302,7 +305,7 @@ a {
 
 .footer-info a {
     color: var(--main-bg-color);
-    text-decoration: none;
+    /* text-decoration: none; */
 }
 
 /* MODAL */
