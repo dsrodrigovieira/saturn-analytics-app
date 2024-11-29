@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">    
+    <link rel="stylesheet" href="./assets/css/index.css">    
     <title>Login</title>
 </head>
 <body>
@@ -32,18 +32,19 @@
             <input type="password" placeholder="Senha" name="user-pw" id="user-pw" class="input-text">
         </section>
         <section class="form-footer">
-            <button type="submit" class="form-btn"><a href="home.html">Login</a></button> 
+            <!-- <button type="submit" class="form-btn"><a href="home.html">Login</a></button>  -->
+            <button type="submit" class="form-btn" id="form-btn">Login</button>
             <div id="btn-cancel" class="btn-cancel">Cancelar</div>                
         </section>                
     </div>        
     
     <div id="item-register" class="container-register container-hide">
         <section class="register-form-body">
-            <input type="text" placeholder="Nome" name="user-name" id="user-name" class="input-text">
-            <input type="text" placeholder="Sobrenome" name="user-surname" id="user-surname" class="input-text">
-            <input type="email" placeholder="E-mail" name="user-email" id="user-email" class="input-text">
-            <input type="password" placeholder="Senha" name="user-pw" id="user-pw" class="input-text">
-            <input type="password" placeholder="Confirme e senha" name="user-pw2" id="user-pw2" class="input-text">
+            <input type="text" placeholder="Nome" name="user-name" id="username" class="input-text">
+            <input type="text" placeholder="Sobrenome" name="user-surname" id="usersurname" class="input-text">
+            <input type="email" placeholder="E-mail" name="user-email" id="useremail" class="input-text">
+            <input type="password" placeholder="Senha" name="user-pw" id="userpw" class="input-text">
+            <input type="password" placeholder="Confirme e senha" name="userpw2" id="user-pw2" class="input-text">
         </section>
         <section class="form-footer">
             <button type="submit" class="form-btn"><a href="index.html">Salvar</a></button> 
@@ -51,6 +52,8 @@
         </section>
     </div>
 
-    <script src="js/index.js"></script>
+    <script src="./assets/js/index.js"></script>
+    <script src="./assets/js/app.js"></script>
+    
 </body>
 </html>
