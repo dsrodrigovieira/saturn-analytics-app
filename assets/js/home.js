@@ -43,111 +43,255 @@ filter_year.addEventListener('change', (e) => {
     filter_month.innerHTML = content_month;
 })
 
+const KPI_URL = 'http://localhost:3000/kpi-results'
+
+  
 // EXIBIR INDICADORES A PARTIR DOS FILTROS
-filter_month.addEventListener('change', (e) => {
+filter_month.addEventListener('change', async (e) => {
     let content_indicadores = `` 
-    let r = resultados_indicadores.filter(obj => {return obj.ano == filter_year.value & obj.mes == filter_month.value})    
-    for (let p of r[0].resultados) {                
-        let indicador = indicadores_ans.find(obj => {return obj.id === p.id})        
-        let oper = operators[indicador.direcao](p.valor, indicador.meta_valor)
-        let cor = oper ? "#28a745" : "#dc3545"        
-        // VERIFICA SE O VALOR SERA EXIBIDO EM 1 OU 2 LINHAS
-        if (indicador.unidade == "%") {
-            // VERIFICA DIREÇÃO DA TENDENCIA
-            if (p.variacao == "c") {                
-                content_indicadores += `
-                <div class="plot" id="plot${p.id}">
-                    <div class="plot-header">
-                        <a>${indicador.titulo}</a>
-                        <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
-                    </div>         
-                    <div style="color:${cor};" class="plot-value">
-                        <h1>${p.valor}${indicador.unidade}</h1>
-                        ${variacao_c}
-                    </div>
-                </div>
-                `
-            } else if (p.variacao == "d") {
-                content_indicadores += `
-                <div class="plot" id="plot${p.id}">
-                    <div class="plot-header">
-                        <a>${indicador.titulo}</a>
-                        <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
-                    </div>         
-                    <div style="color:${cor};" class="plot-value">
-                        <h1>${p.valor}${indicador.unidade}</h1>
-                        ${variacao_d}
-                    </div>
-                </div>
-                `
-            } else {
-                content_indicadores += `
-                <div class="plot" id="plot${p.id}">
-                    <div class="plot-header">
-                        <a>${indicador.titulo}</a>
-                        <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
-                    </div>         
-                    <div style="color:${cor};" class="plot-value">
-                        <h1>${p.valor}${indicador.unidade}</h1>
-                        ${variacao_n}
-                    </div>
-                </div>
-                `
-            }
-        } else { 
-            if (p.variacao == "c") {
-                content_indicadores += `
-                <div class="plot" id="plot${p.id}">
-                    <div class="plot-header">
-                        <a>${indicador.titulo}</a>
-                        <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
-                    </div>         
-                    <div style="color:${cor};" class="plot-value">
-                        <div class="value">
-                            <h1>${p.valor}</h1>
-                            <p>${indicador.unidade}</p>
-                        </div>
-                        ${variacao_c}
-                    </div> 
-                </div>
-                `
-            } else if (p.variacao == "d") {
-                content_indicadores += `
-                <div class="plot" id="plot${p.id}">
-                    <div class="plot-header">
-                        <a>${indicador.titulo}</a>
-                        <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
-                    </div>         
-                    <div style="color:${cor};" class="plot-value">
-                        <div class="value">
-                            <h1>${p.valor}</h1>
-                            <p>${indicador.unidade}</p>
-                        </div>
-                        ${variacao_d}
-                    </div> 
-                </div>
-                `
-            } else {
-                content_indicadores += `
-                <div class="plot" id="plot${p.id}">
-                    <div class="plot-header">
-                        <a>${indicador.titulo}</a>
-                        <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
-                    </div>         
-                    <div style="color:${cor};" class="plot-value">
-                        <div class="value">
-                            <h1>${p.valor}</h1>
-                            <p>${indicador.unidade}</p>
-                        </div>
-                        ${variacao_n}
-                    </div> 
-                </div>
-                `
-            }
-        }                
-    }
-    plots.innerHTML = content_indicadores;
+    const organization_cnes = 9876543
+    const year = filter_year.value
+    const month = filter_month.value
+
+    //console.log(document.cookie)
+    //const token = getCookie('authToken');
+    //console.log(document.cookie);
+
+    const token = sessionStorage.getItem('authToken');
+    //console.log('Token do Cookie:', token);
+
+    
+    try {
+        const response = await fetch(`${KPI_URL}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ organization_cnes, year, month }),
+          credentials: 'include', // Inclui cookies na requisição
+        });
+    
+        if (!response.ok) {
+          throw new Error(`Unable o fetch data. ${response.message}`);
+        }
+    
+        const data = await response.json();
+        
+        //alert(data.message);
+    
+        // Redireciona para a página home após login bem-sucedido
+        //window.location.href = 'home.html';    
+        //console.log('Token:', data.token);
+        console.log(data)
+    } catch (error) {
+        alert('Erro: '+error.message);
+    }    
+    
+    // let r = resultados_indicadores.filter(obj => {return obj.ano == filter_year.value & obj.mes == filter_month.value})    
+    // for (let p of r[0].resultados) {                
+    //     let indicador = indicadores_ans.find(obj => {return obj.id === p.id})        
+    //     let oper = operators[indicador.direcao](p.valor, indicador.meta_valor)
+    //     let cor = oper ? "#28a745" : "#dc3545"        
+    //     // VERIFICA SE O VALOR SERA EXIBIDO EM 1 OU 2 LINHAS
+    //     if (indicador.unidade == "%") {
+    //         // VERIFICA DIREÇÃO DA TENDENCIA
+    //         if (p.variacao == "c") {                
+    //             content_indicadores += `
+    //             <div class="plot" id="plot${p.id}">
+    //                 <div class="plot-header">
+    //                     <a>${indicador.titulo}</a>
+    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
+    //                 </div>         
+    //                 <div style="color:${cor};" class="plot-value">
+    //                     <h1>${p.valor}${indicador.unidade}</h1>
+    //                     ${variacao_c}
+    //                 </div>
+    //             </div>
+    //             `
+    //         } else if (p.variacao == "d") {
+    //             content_indicadores += `
+    //             <div class="plot" id="plot${p.id}">
+    //                 <div class="plot-header">
+    //                     <a>${indicador.titulo}</a>
+    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
+    //                 </div>         
+    //                 <div style="color:${cor};" class="plot-value">
+    //                     <h1>${p.valor}${indicador.unidade}</h1>
+    //                     ${variacao_d}
+    //                 </div>
+    //             </div>
+    //             `
+    //         } else {
+    //             content_indicadores += `
+    //             <div class="plot" id="plot${p.id}">
+    //                 <div class="plot-header">
+    //                     <a>${indicador.titulo}</a>
+    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
+    //                 </div>         
+    //                 <div style="color:${cor};" class="plot-value">
+    //                     <h1>${p.valor}${indicador.unidade}</h1>
+    //                     ${variacao_n}
+    //                 </div>
+    //             </div>
+    //             `
+    //         }
+    //     } else { 
+    //         if (p.variacao == "c") {
+    //             content_indicadores += `
+    //             <div class="plot" id="plot${p.id}">
+    //                 <div class="plot-header">
+    //                     <a>${indicador.titulo}</a>
+    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
+    //                 </div>         
+    //                 <div style="color:${cor};" class="plot-value">
+    //                     <div class="value">
+    //                         <h1>${p.valor}</h1>
+    //                         <p>${indicador.unidade}</p>
+    //                     </div>
+    //                     ${variacao_c}
+    //                 </div> 
+    //             </div>
+    //             `
+    //         } else if (p.variacao == "d") {
+    //             content_indicadores += `
+    //             <div class="plot" id="plot${p.id}">
+    //                 <div class="plot-header">
+    //                     <a>${indicador.titulo}</a>
+    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
+    //                 </div>         
+    //                 <div style="color:${cor};" class="plot-value">
+    //                     <div class="value">
+    //                         <h1>${p.valor}</h1>
+    //                         <p>${indicador.unidade}</p>
+    //                     </div>
+    //                     ${variacao_d}
+    //                 </div> 
+    //             </div>
+    //             `
+    //         } else {
+    //             content_indicadores += `
+    //             <div class="plot" id="plot${p.id}">
+    //                 <div class="plot-header">
+    //                     <a>${indicador.titulo}</a>
+    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
+    //                 </div>         
+    //                 <div style="color:${cor};" class="plot-value">
+    //                     <div class="value">
+    //                         <h1>${p.valor}</h1>
+    //                         <p>${indicador.unidade}</p>
+    //                     </div>
+    //                     ${variacao_n}
+    //                 </div> 
+    //             </div>
+    //             `
+    //         }
+    //     }                
+    // }
+    // plots.innerHTML = content_indicadores;
 })
+
+// filter_month.addEventListener('change', async (e) => {
+//     let content_indicadores = `` 
+//     let r = resultados_indicadores.filter(obj => {return obj.ano == filter_year.value & obj.mes == filter_month.value})    
+//     for (let p of r[0].resultados) {                
+//         let indicador = indicadores_ans.find(obj => {return obj.id === p.id})        
+//         let oper = operators[indicador.direcao](p.valor, indicador.meta_valor)
+//         let cor = oper ? "#28a745" : "#dc3545"        
+//         // VERIFICA SE O VALOR SERA EXIBIDO EM 1 OU 2 LINHAS
+//         if (indicador.unidade == "%") {
+//             // VERIFICA DIREÇÃO DA TENDENCIA
+//             if (p.variacao == "c") {                
+//                 content_indicadores += `
+//                 <div class="plot" id="plot${p.id}">
+//                     <div class="plot-header">
+//                         <a>${indicador.titulo}</a>
+//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
+//                     </div>         
+//                     <div style="color:${cor};" class="plot-value">
+//                         <h1>${p.valor}${indicador.unidade}</h1>
+//                         ${variacao_c}
+//                     </div>
+//                 </div>
+//                 `
+//             } else if (p.variacao == "d") {
+//                 content_indicadores += `
+//                 <div class="plot" id="plot${p.id}">
+//                     <div class="plot-header">
+//                         <a>${indicador.titulo}</a>
+//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
+//                     </div>         
+//                     <div style="color:${cor};" class="plot-value">
+//                         <h1>${p.valor}${indicador.unidade}</h1>
+//                         ${variacao_d}
+//                     </div>
+//                 </div>
+//                 `
+//             } else {
+//                 content_indicadores += `
+//                 <div class="plot" id="plot${p.id}">
+//                     <div class="plot-header">
+//                         <a>${indicador.titulo}</a>
+//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
+//                     </div>         
+//                     <div style="color:${cor};" class="plot-value">
+//                         <h1>${p.valor}${indicador.unidade}</h1>
+//                         ${variacao_n}
+//                     </div>
+//                 </div>
+//                 `
+//             }
+//         } else { 
+//             if (p.variacao == "c") {
+//                 content_indicadores += `
+//                 <div class="plot" id="plot${p.id}">
+//                     <div class="plot-header">
+//                         <a>${indicador.titulo}</a>
+//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
+//                     </div>         
+//                     <div style="color:${cor};" class="plot-value">
+//                         <div class="value">
+//                             <h1>${p.valor}</h1>
+//                             <p>${indicador.unidade}</p>
+//                         </div>
+//                         ${variacao_c}
+//                     </div> 
+//                 </div>
+//                 `
+//             } else if (p.variacao == "d") {
+//                 content_indicadores += `
+//                 <div class="plot" id="plot${p.id}">
+//                     <div class="plot-header">
+//                         <a>${indicador.titulo}</a>
+//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
+//                     </div>         
+//                     <div style="color:${cor};" class="plot-value">
+//                         <div class="value">
+//                             <h1>${p.valor}</h1>
+//                             <p>${indicador.unidade}</p>
+//                         </div>
+//                         ${variacao_d}
+//                     </div> 
+//                 </div>
+//                 `
+//             } else {
+//                 content_indicadores += `
+//                 <div class="plot" id="plot${p.id}">
+//                     <div class="plot-header">
+//                         <a>${indicador.titulo}</a>
+//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
+//                     </div>         
+//                     <div style="color:${cor};" class="plot-value">
+//                         <div class="value">
+//                             <h1>${p.valor}</h1>
+//                             <p>${indicador.unidade}</p>
+//                         </div>
+//                         ${variacao_n}
+//                     </div> 
+//                 </div>
+//                 `
+//             }
+//         }                
+//     }
+//     plots.innerHTML = content_indicadores;
+// })
 
 // EXIBE MODAL
 function showDialog(show,kpi_id) {    
