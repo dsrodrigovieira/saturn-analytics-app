@@ -44,6 +44,7 @@ filter_year.addEventListener('change', (e) => {
 })
 
 const KPI_URL = 'http://localhost:3000/kpi-results'
+const KPI = 'http://localhost:3000/kpi'
 
   
 // EXIBIR INDICADORES A PARTIR DOS FILTROS
@@ -52,38 +53,38 @@ filter_month.addEventListener('change', async (e) => {
     const organization_cnes = 9876543
     const year = filter_year.value
     const month = filter_month.value
-
-    //console.log(document.cookie)
-    //const token = getCookie('authToken');
-    //console.log(document.cookie);
-
-    const token = sessionStorage.getItem('authToken');
-    //console.log('Token do Cookie:', token);
-
-    
+    const token = sessionStorage.getItem('authToken');    
     try {
         const response = await fetch(`${KPI_URL}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           body: JSON.stringify({ organization_cnes, year, month }),
           credentials: 'include', // Inclui cookies na requisição
-        });
-    
+        });    
         if (!response.ok) {
           throw new Error(`Unable o fetch data. ${response.message}`);
         }
-    
-        const data = await response.json();
-        
-        //alert(data.message);
-    
-        // Redireciona para a página home após login bem-sucedido
-        //window.location.href = 'home.html';    
-        //console.log('Token:', data.token);
-        console.log(data)
+        const kpi_results = await response.json().message;
     } catch (error) {
         alert('Erro: '+error.message);
     }    
+
+    try {
+        const response = await fetch(`${KPI}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          credentials: 'include', // Inclui cookies na requisição
+        });    
+        if (!response.ok) {
+          throw new Error(`Unable o fetch data. ${response.message}`);
+        }
+        const kpis = await response.json();
+        console.log(kpis)
+    } catch (error) {
+        alert('Erro: '+error.message);
+    }  
+    
+    
     
     // let r = resultados_indicadores.filter(obj => {return obj.ano == filter_year.value & obj.mes == filter_month.value})    
     // for (let p of r[0].resultados) {                
