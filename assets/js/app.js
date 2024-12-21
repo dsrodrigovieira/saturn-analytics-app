@@ -8,7 +8,6 @@ const API_URL = 'http://localhost:3000';
 //     acc[key.trim()] = value;
 //     return acc;
 //   }, {});
-
 //   // Verificar se o token existe
 //   if (!cookies.authToken) {
 //     alert('Acesso negado! Por favor, faça login.');
@@ -27,7 +26,6 @@ async function checkAuth() {
     }
 
     const data = await response.json();
-    console.log(data.message);
   } catch (error) {
     alert('Acesso negado! Por favor, faça login.');
     window.location.href = 'index.html';
@@ -39,7 +37,18 @@ if (window.location.pathname.includes('home.html')) {
   checkAuth();
 }
 
-document.getElementById('btn-login').addEventListener('click', async (e) => {
+  // Função para obter um cookie pelo nome
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        return parts.pop().split(';').shift();
+    }
+    return null;
+  }
+
+
+document.getElementById('form-btn').addEventListener('click', async (e) => {
   e.preventDefault();
 
   const email = document.getElementById('login-email').value;
@@ -58,12 +67,13 @@ document.getElementById('btn-login').addEventListener('click', async (e) => {
     }
 
     const data = await response.json();
+    const token = getCookie('authToken');
+    sessionStorage.setItem('authToken', token);
     
     alert(data.message);
 
     // Redireciona para a página home após login bem-sucedido
-    window.location.href = 'home.html';    
-    console.log('Token:', data.token);
+    window.location.href = 'home.html';      
   } catch (error) {
     alert('Erro: '+error.message);
   }
