@@ -1,5 +1,5 @@
 import { filtro_anos } from './data.js'
-require('dotenv').config();
+
 const API_URL = process.env.API_BASE_URL;
 const KPI_URL = `${API_URL}/results`
 const KPI     = `${API_URL}/kpi`
