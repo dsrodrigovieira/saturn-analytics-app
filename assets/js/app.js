@@ -68,10 +68,10 @@ document.getElementById('form-btn').addEventListener('click', async (e) => {
     }
 
     const data = await response.json();
-    sessionStorage.setItem('authToken', getCookie('authToken'));
-    sessionStorage.setItem('organizationCnes', getCookie('organizationCnes'));
+    //sessionStorage.setItem('authToken', getCookie('authToken'));
+    sessionStorage.setItem('organizationCnes', data.cnes);
     // const ck = getCookie('organizationCnes')
-    console.log(data.cnes)
+    //console.log(data.cnes)
     //console.log(getCookie('authToken'))
     //console.log(getCookie('organizationCnes'))
     // console.log(data)
