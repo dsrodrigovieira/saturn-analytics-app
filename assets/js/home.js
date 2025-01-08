@@ -24,7 +24,7 @@ var operators = {
     '>' : function (a, b){ return a>b},
     '<' : function (a, b){ return a<b}
 }
-const token = sessionStorage.getItem('authToken');    
+//const token = sessionStorage.getItem('authToken');    
 var organization_cnes = sessionStorage.getItem('organizationCnes');  
 // const KPI_URL = 'http://localhost:3000/results'
 // const KPI     = 'http://localhost:3000/kpi'
@@ -61,7 +61,8 @@ filter_month.addEventListener('change', async (e) => {
     try {
         const response = await fetch(`${KPI}`, {
           //method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          //headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          headers: { 'Content-Type': 'application/json' },
           credentials: 'include', // Inclui cookies na requisição
         });
         if (!response.ok) {
@@ -77,7 +78,8 @@ filter_month.addEventListener('change', async (e) => {
     try {
         const response = await fetch(`${KPI_URL}/${organization_cnes}/${year}/${month}`, {
           //method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          //headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          headers: { 'Content-Type': 'application/json' },
           //body: JSON.stringify({ organization_cnes, year, month }),
           credentials: 'include', // Inclui cookies na requisição
         });    
