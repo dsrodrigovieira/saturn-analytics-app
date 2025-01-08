@@ -55,8 +55,8 @@
     </div>
     <!-- FOOTER -->
     <div class="footer-container">
-        <!-- <div class="footer-menu" id="footer-menu">
-            <a href="#" class="menu-options" onclick="showOptionsMenu()">
+        <div class="footer-menu" id="footer-menu">
+            <!-- <a href="#" class="menu-options" onclick="showOptionsMenu()">
                 <i class="fa-solid fa-bars fa-2xl"></i>
             </a>            
             <div id="options-content" class="footer-menu-item">
@@ -88,9 +88,9 @@
                 <a href="#">Controle de Acesso</a>
                 <a href="#">Configurações dos Indicadores</a>
                 <a href="#">Modo escuro</a>
-            </div>
-            <a href="index.html"><i class="fa-solid fa-xmark fa-2xl"></i></a>
-        </div> -->
+            </div> -->
+            <a><i class="fa-solid fa-xmark fa-2xl" id="logout-btn"></i></a>
+        </div>
         <div class="footer-info">            
             <h6>Copyright (c) 2024 <a href="https://github.com/dsrodrigovieira" target="_blank">Rodrigo Vieira</a></h6>
         </div>
@@ -104,8 +104,8 @@
         checkAuth();
     
         // Lógica de logout
-        //document.getElementById('logout-btn').addEventListener('click', async () => {
-        document.getElementById('page-name').addEventListener('click', async () => {
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+        //document.getElementById('page-name').addEventListener('click', async () => {
           await fetch(`${API_URL}/logout`, {
             method: 'POST',
             credentials: 'include', // Inclui cookies
