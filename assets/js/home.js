@@ -1,7 +1,7 @@
-import { filtro_anos, API_BASE_URL } from './data.js';
+import { filtro_anos, api_base_url } from './data.js';
 
-const KPI_URL = `${API_BASE_URL}/results`;
-const KPI     = `${API_BASE_URL}/kpi`;
+const KPI_URL = `${api_base_url}/results`;
+const KPI     = `${api_base_url}/kpi`;
 
 const variacao_c = `<i class="fa-solid fa-angles-up fa-2xl"></i>`;
 const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-2xl"></i>`;

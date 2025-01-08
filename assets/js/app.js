@@ -1,4 +1,4 @@
-import { API_BASE_URL } from './data.js';
+import { api_base_url } from './data.js';
 
 async function checkAuth() {
   try {
@@ -22,7 +22,7 @@ document.getElementById('form-btn').addEventListener('click', async (e) => {
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
   try {
-    const response = await fetch(`${API_BASE_URL}/auth`, {
+    const response = await fetch(`${api_base_url}/auth`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),

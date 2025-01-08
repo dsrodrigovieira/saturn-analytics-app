@@ -1,4 +1,4 @@
-export const API_BASE_URL = "https://saturn-api.vercel.app";
+export const api_base_url = "https://saturn-api.vercel.app";
 
 export const filtro_anos = [
     {
