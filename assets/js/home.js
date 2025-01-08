@@ -1,7 +1,7 @@
-import { filtro_anos, api_base_url } from './data.js';
+import { filtro_anos } from './data.js';
 
-const KPI_URL = `${api_base_url}/results`;
-const KPI     = `${api_base_url}/kpi`;
+const KPI_URL = "https://saturn-api.vercel.app/results";
+const KPI     = "https://saturn-api.vercel.app/kpi";
 
 const variacao_c = `<i class="fa-solid fa-angles-up fa-2xl"></i>`;
 const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-2xl"></i>`;

@@ -1,8 +1,6 @@
-import { api_base_url } from './data.js';
-
 async function checkAuth() {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/validate`, { credentials: 'include' });
+    const response = await fetch("https://saturn-api.vercel.app/auth/validate", { credentials: 'include' });
     if (!response.ok) {
       throw new Error('Não autenticado');
     }    
@@ -22,7 +20,7 @@ document.getElementById('form-btn').addEventListener('click', async (e) => {
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
   try {
-    const response = await fetch(`${api_base_url}/auth`, {
+    const response = await fetch("https://saturn-api.vercel.app/auth", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
