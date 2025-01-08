@@ -47,7 +47,6 @@ if (window.location.pathname.includes('home.html')) {
     return null;
   }
 
-
 document.getElementById('form-btn').addEventListener('click', async (e) => {
   e.preventDefault();
 
@@ -67,8 +66,8 @@ document.getElementById('form-btn').addEventListener('click', async (e) => {
     }
 
     const data = await response.json();
-    const token = getCookie('authToken');
-    sessionStorage.setItem('authToken', token);
+    sessionStorage.setItem('authToken', getCookie('authToken'));
+    sessionStorage.setItem('organizationCnes', getCookie('organizationCnes'));
     
     alert(data.message);
 
@@ -111,13 +110,9 @@ document.getElementById('btn-register').addEventListener('click', async (e) => {
       alert(data.message);
   
       // Redireciona para a página home após login bem-sucedido
-      window.location.href = 'index.html';    
-      //console.log('Token:', data.token);
+      window.location.href = 'index.html'; 
     } catch (error) {
       alert('Erro: '+error.message);
     }
-
   }
-
-
 });
