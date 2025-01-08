@@ -104,7 +104,7 @@
         checkAuth();    
         // Logout
         document.getElementById('logout-btn').addEventListener('click', async () => {
-          await fetch(`${API_URL}/logout`, { method: 'POST', credentials: 'include' });
+          await fetch("https://saturn-api.vercel.app/logout", { method: 'POST', credentials: 'include' });
           alert('Logout realizado com sucesso!');
           window.location.href = 'index.html';
         });
