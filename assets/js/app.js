@@ -71,9 +71,9 @@ document.getElementById('form-btn').addEventListener('click', async (e) => {
     sessionStorage.setItem('authToken', getCookie('authToken'));
     sessionStorage.setItem('organizationCnes', getCookie('organizationCnes'));
     // const ck = getCookie('organizationCnes')
-    //console.log(document.cookie)
-    // console.log(getCookie('authToken'))
-    // console.log(getCookie('organizationCnes'))
+    console.log(document.cookie)
+    console.log(getCookie('authToken'))
+    console.log(getCookie('organizationCnes'))
     // console.log(data)
 
     //console.log(data.message)
