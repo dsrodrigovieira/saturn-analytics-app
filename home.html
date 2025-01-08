@@ -101,15 +101,10 @@
     <script src="./assets/js/app.js"></script>
     <script>
         // Verificar autenticação ao carregar a página
-        checkAuth();
-    
-        // Lógica de logout
+        checkAuth();    
+        // Logout
         document.getElementById('logout-btn').addEventListener('click', async () => {
-        //document.getElementById('page-name').addEventListener('click', async () => {
-          await fetch(`${API_URL}/logout`, {
-            method: 'POST',
-            credentials: 'include', // Inclui cookies
-          });
+          await fetch(`${API_URL}/logout`, { method: 'POST', credentials: 'include' });
           alert('Logout realizado com sucesso!');
           window.location.href = 'index.html';
         });

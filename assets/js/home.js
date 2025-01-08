@@ -1,35 +1,37 @@
 import { filtro_anos } from './data.js'
+require('dotenv').config();
+const API_URL = process.env.API_BASE_URL;
+const KPI_URL = `${API_URL}/results`
+const KPI     = `${API_URL}/kpi`
+
+const variacao_c = `<i class="fa-solid fa-angles-up fa-2xl"></i>`
+const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-2xl"></i>`
+const variacao_n = `<i class="fa-solid fa-grip-lines fa-2xl"></i>`
 
 let filter_year = document.getElementById("year")
 let filter_month = document.getElementById("month")
 let plots = document.getElementById("section-plots-ans")
 let dialog = document.getElementById("dialog-info")
 let dialog_wrapper = document.getElementById("dialog-wrapper")
-let main_content = document.getElementById("main-content")
 let wrapper = document.querySelector(".dialog-wrapper")
-let footer_menu = document.getElementById("footer-menu")
-let options_content = document.getElementById("options-content");
-let settings_content = document.getElementById("settings-content");
-let user_content = document.getElementById("user-content");
-let notification_content = document.getElementById("notification-content");
+
+// let main_content = document.getElementById("main-content")
+// let footer_menu = document.getElementById("footer-menu")
+// let options_content = document.getElementById("options-content");
+// let settings_content = document.getElementById("settings-content");
+// let user_content = document.getElementById("user-content");
+// let notification_content = document.getElementById("notification-content");
+
 let plot_id = ""
 var kpi_info = ""
 var kpi_data = ""
-const variacao_c = `<i class="fa-solid fa-angles-up fa-2xl"></i>`
-const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-2xl"></i>`
-const variacao_n = `<i class="fa-solid fa-grip-lines fa-2xl"></i>`
 var operators = {
     '>=': function (a, b){ return a>=b},
     '<=': function (a, b){ return a<=b},
     '>' : function (a, b){ return a>b},
     '<' : function (a, b){ return a<b}
 }
-//const token = sessionStorage.getItem('authToken');    
 var organization_cnes = sessionStorage.getItem('organizationCnes');  
-// const KPI_URL = 'http://localhost:3000/results'
-// const KPI     = 'http://localhost:3000/kpi'
-const KPI_URL = 'https://saturn-api.vercel.app/results'
-const KPI     = 'https://saturn-api.vercel.app/kpi'
 
 // POPULAR FILTRO ANO
 let content_year = `<option value="">Selecione</option>`
@@ -60,8 +62,6 @@ filter_month.addEventListener('change', async (e) => {
     // busca informações dos indicadores
     try {
         const response = await fetch(`${KPI}`, {
-          //method: 'POST',
-          //headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include', // Inclui cookies na requisição
         });
@@ -77,10 +77,7 @@ filter_month.addEventListener('change', async (e) => {
     // busca dados dos indicadores
     try {
         const response = await fetch(`${KPI_URL}/${organization_cnes}/${year}/${month}`, {
-          //method: 'POST',
-          //headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           headers: { 'Content-Type': 'application/json' },
-          //body: JSON.stringify({ organization_cnes, year, month }),
           credentials: 'include', // Inclui cookies na requisição
         });    
         if (response.status === 400) {
