@@ -1,19 +1,18 @@
-import { filtro_anos } from './data.js'
+import { filtro_anos, API_BASE_URL } from './data.js';
 
-const API_URL = process.env.API_BASE_URL;
-const KPI_URL = `${API_URL}/results`
-const KPI     = `${API_URL}/kpi`
+const KPI_URL = `${API_BASE_URL}/results`;
+const KPI     = `${API_BASE_URL}/kpi`;
 
-const variacao_c = `<i class="fa-solid fa-angles-up fa-2xl"></i>`
-const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-2xl"></i>`
-const variacao_n = `<i class="fa-solid fa-grip-lines fa-2xl"></i>`
+const variacao_c = `<i class="fa-solid fa-angles-up fa-2xl"></i>`;
+const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-2xl"></i>`;
+const variacao_n = `<i class="fa-solid fa-grip-lines fa-2xl"></i>`;
 
-let filter_year = document.getElementById("year")
-let filter_month = document.getElementById("month")
-let plots = document.getElementById("section-plots-ans")
-let dialog = document.getElementById("dialog-info")
-let dialog_wrapper = document.getElementById("dialog-wrapper")
-let wrapper = document.querySelector(".dialog-wrapper")
+let filter_year = document.getElementById("year");
+let filter_month = document.getElementById("month");
+let plots = document.getElementById("section-plots-ans");
+let dialog = document.getElementById("dialog-info");
+let dialog_wrapper = document.getElementById("dialog-wrapper");
+let wrapper = document.querySelector(".dialog-wrapper");
 
 // let main_content = document.getElementById("main-content")
 // let footer_menu = document.getElementById("footer-menu")
@@ -22,31 +21,31 @@ let wrapper = document.querySelector(".dialog-wrapper")
 // let user_content = document.getElementById("user-content");
 // let notification_content = document.getElementById("notification-content");
 
-let plot_id = ""
-var kpi_info = ""
-var kpi_data = ""
+let plot_id = "";
+var kpi_info = "";
+var kpi_data = "";
 var operators = {
     '>=': function (a, b){ return a>=b},
     '<=': function (a, b){ return a<=b},
     '>' : function (a, b){ return a>b},
     '<' : function (a, b){ return a<b}
-}
+};
 var organization_cnes = sessionStorage.getItem('organizationCnes');  
 
 // POPULAR FILTRO ANO
-let content_year = `<option value="">Selecione</option>`
+let content_year = `<option value="">Selecione</option>`;
 for (let i of filtro_anos) {
-    content_year += `<option value="${i.ano}">${i.ano}</option>`
-}
+    content_year += `<option value="${i.ano}">${i.ano}</option>`;
+};
 filter_year.innerHTML = content_year;
 
 // POPULAR FILTRO MÊS A PARTIR DO ANO
 filter_year.addEventListener('change', (e) => {
-    let content_month = `<option value="">Selecione</option>`
+    let content_month = `<option value="">Selecione</option>`;
     for (let j of filtro_anos) {
         if (j.ano == filter_year.value) {
             for (let k of j.meses) {            
-                content_month += `<option value="${k.num}">${k.desc}</option>`
+                content_month += `<option value="${k.num}">${k.desc}</option>`;
             };
         };
     };  
@@ -55,9 +54,9 @@ filter_year.addEventListener('change', (e) => {
   
 // EXIBIR INDICADORES A PARTIR DOS FILTROS
 filter_month.addEventListener('change', async (e) => {
-    let content_indicadores = `` 
-    const year = filter_year.value
-    const month = filter_month.value  
+    let content_indicadores = ``;
+    const year = filter_year.value;
+    const month = filter_month.value;
 
     // busca informações dos indicadores
     try {
@@ -67,18 +66,18 @@ filter_month.addEventListener('change', async (e) => {
         });
         if (!response.ok) {
           throw new Error(`Unable o fetch data. ${response.message}`);
-        }
+        };
         const raw_kpis = await response.json();
-        kpi_info = raw_kpis.message
+        kpi_info = raw_kpis.message;
     } catch (error) {
         alert('Erro: '+error.message);
-    }    
+    };   
 
     // busca dados dos indicadores
     try {
         const response = await fetch(`${KPI_URL}/${organization_cnes}/${year}/${month}`, {
           headers: { 'Content-Type': 'application/json' },
-          credentials: 'include', // Inclui cookies na requisição
+          credentials: 'include' // Inclui cookies na requisição
         });    
         if (response.status === 400) {
             plots.style.setProperty("grid-template-columns","None");
@@ -88,29 +87,29 @@ filter_month.addEventListener('change', async (e) => {
                     <h3>Nenhum dado disponível</h3>
                     <p>Verifique se a competência em questão já foi consolidada.</p>
                 </div>
-            `
+            `;
         } else if (!response.ok) {
           throw new Error(`Unable o fetch data. ${response.status}`);
         } else {
             if (plots.style.getPropertyValue("grid-template-columns") === "none") {
                 if (window.innerWidth >= 1024) {
-                    plots.style.setProperty("grid-template-columns","repeat(3, 1fr)")
+                    plots.style.setProperty("grid-template-columns","repeat(3, 1fr)");
                 } else if (window.innerWidth >= 720) {
-                    plots.style.setProperty("grid-template-columns","repeat(2, 1fr)")
-                }
-            }
-        }
+                    plots.style.setProperty("grid-template-columns","repeat(2, 1fr)");
+                };
+            };
+        };
         const raw_kpi_results = await response.json();
-        kpi_data = raw_kpi_results.message
+        kpi_data = raw_kpi_results.message;
     } catch (error) {
         alert('Erro: '+error.message);
     }  
 
     for (let i in kpi_info) {
-        const indicador = kpi_info[i]
-        const dados = kpi_data.data[`rkpi_${indicador.sequencia}`]
-        const oper = operators[indicador.direcao](dados.value.toFixed(1), indicador.meta_valor)
-        const cor = oper ? "#28a745" : "#dc3545"  
+        const indicador = kpi_info[i];
+        const dados = kpi_data.data[`rkpi_${indicador.sequencia}`];
+        const oper = operators[indicador.direcao](dados.value.toFixed(1), indicador.meta_valor);
+        const cor = oper ? "#28a745" : "#dc3545";
 
         // VERIFICA SE O VALOR SERA EXIBIDO EM 1 OU 2 LINHAS
         if (indicador.unidade == "%") {
@@ -127,7 +126,7 @@ filter_month.addEventListener('change', async (e) => {
                         ${variacao_c}
                     </div>
                 </div>
-                `
+                `;
             } else if (dados.variacao == "d") {
                 content_indicadores += `
                 <div class="plot" id="plot${indicador.sequencia}">
@@ -140,7 +139,7 @@ filter_month.addEventListener('change', async (e) => {
                         ${variacao_d}
                     </div>
                 </div>
-                `
+                `;
             } else {
                 content_indicadores += `
                 <div class="plot" id="plot${indicador.sequencia}">
@@ -153,8 +152,8 @@ filter_month.addEventListener('change', async (e) => {
                         ${variacao_n}
                     </div>
                 </div>
-                `
-            }
+                `;
+            };
         } else { 
             if (dados.variacao == "c") {
                 content_indicadores += `
@@ -171,7 +170,7 @@ filter_month.addEventListener('change', async (e) => {
                         ${variacao_c}
                     </div> 
                 </div>
-                `
+                `;
             } else if (dados.variacao == "d") {
                 content_indicadores += `
                 <div class="plot" id="plot${indicador.sequencia}">
@@ -187,7 +186,7 @@ filter_month.addEventListener('change', async (e) => {
                         ${variacao_d}
                     </div> 
                 </div>
-                `
+                `;
             } else {
                 content_indicadores += `
                 <div class="plot" id="plot${indicador.sequencia}">
@@ -203,19 +202,18 @@ filter_month.addEventListener('change', async (e) => {
                         ${variacao_n}
                     </div> 
                 </div>
-                `
-            }
-        }  
-    }
+                `;
+            };
+        };
+    };
     plots.innerHTML = content_indicadores;
-
 })
 
 // EXIBE MODAL COM INFORMAÇÕES DO INDICADOR
 function showDialog(show, kpi_id) {   
-    plot_id = document.getElementById(`plot${kpi_id}`)
-    let info = kpi_info[kpi_id-1]    
-    let content_modal = ``
+    plot_id = document.getElementById(`plot${kpi_id}`);
+    let info = kpi_info[kpi_id-1];
+    let content_modal = ``;
     if (show) {
         content_modal = `        
             <div class="dialog-info-header">
@@ -226,25 +224,25 @@ function showDialog(show, kpi_id) {
                 <p style="text-align: justify;">${info.descricao}</p>
                 <p><b>Meta:</b> ${info.meta_valor}</p>
             </div>        
-        `        
-        plot_id.classList.add("plot-focus")
-        dialog.showModal()
-        dialog.classList.remove("dialog-hide")
-        dialog.classList.add("dialog-show")        
-    } 
-    dialog_wrapper.innerHTML = content_modal    
-}
-window.showDialog = showDialog
+        `;       
+        plot_id.classList.add("plot-focus");
+        dialog.showModal();
+        dialog.classList.remove("dialog-hide");
+        dialog.classList.add("dialog-show");
+    };
+    dialog_wrapper.innerHTML = content_modal;
+};
+window.showDialog = showDialog;
 
 // FECHA MODAL
 dialog.addEventListener('click', (e) => {
     if (!wrapper.contains(e.target)) {
-        dialog.close()
-        dialog.classList.add("dialog-hide")
-        dialog.classList.remove("dialog-show")
-        plot_id.classList.remove("plot-focus")
-    }
-})
+        dialog.close();
+        dialog.classList.add("dialog-hide");
+        dialog.classList.remove("dialog-show");
+        plot_id.classList.remove("plot-focus");
+    };
+});
 
 // function showOptionsMenu() { options_content.style.display === "block" ? options_content.style.setProperty("display","none") : options_content.style.setProperty("display","block") }
 // window.showOptionsMenu = showOptionsMenu

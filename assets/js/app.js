@@ -1,8 +1,8 @@
-const API_URL = process.env.API_BASE_URL;
+import { API_BASE_URL } from './data.js';
 
 async function checkAuth() {
   try {
-    const response = await fetch(`${API_URL}/auth/validate`, { credentials: 'include' });
+    const response = await fetch(`${API_BASE_URL}/auth/validate`, { credentials: 'include' });
     if (!response.ok) {
       throw new Error('Não autenticado');
     }    
@@ -22,11 +22,11 @@ document.getElementById('form-btn').addEventListener('click', async (e) => {
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
   try {
-    const response = await fetch(`${API_URL}/auth`, {
+    const response = await fetch(`${API_BASE_URL}/auth`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
-      credentials: 'include', // Inclui cookies na requisição
+      credentials: 'include' // Inclui cookies na requisição
     });
     if (!response.ok) {
       throw new Error(`Falha no login. ${response.message}`);
