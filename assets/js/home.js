@@ -26,8 +26,10 @@ var operators = {
 }
 const token = sessionStorage.getItem('authToken');    
 var organization_cnes = sessionStorage.getItem('organizationCnes');  
-const KPI_URL = 'http://localhost:3000/results'
-const KPI     = 'http://localhost:3000/kpi'
+// const KPI_URL = 'http://localhost:3000/results'
+// const KPI     = 'http://localhost:3000/kpi'
+const KPI_URL = 'https://saturn-api.vercel.app/results'
+const KPI     = 'https://saturn-api.vercel.app/kpi'
 
 // POPULAR FILTRO ANO
 let content_year = `<option value="">Selecione</option>`

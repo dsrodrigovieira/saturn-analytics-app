@@ -1,6 +1,10 @@
-const API_URL = 'http://localhost:3000';
+//const API_URL = 'http://localhost:3000';
+const API_URL = 'https://saturn-api.vercel.app';
+//const API_URL = 'https://saturn-api-dev.vercel.app';
 
-// // Função para verificar se o token está presente e válido no cookie (PRD)
+//const API_URL = 'https://saturn-ogyojaja5-dsrodrigovieiras-projects.vercel.app'
+
+// Função para verificar se o token está presente e válido no cookie (PRD)
 // function checkAuth() {
 //   // Obter o cookie "authToken"  
 //   const cookies = document.cookie.split(';').reduce((acc, cookie) => {
@@ -17,14 +21,12 @@ const API_URL = 'http://localhost:3000';
 
 async function checkAuth() {
   try {
-    const response = await fetch('http://localhost:3000/auth/validate', {
+    const response = await fetch(`${API_URL}/auth/validate`, {
       credentials: 'include', // Envia o cookie com a requisição
     });
-
     if (!response.ok) {
       throw new Error('Não autenticado');
     }
-
     const data = await response.json();
   } catch (error) {
     alert('Acesso negado! Por favor, faça login.');
@@ -37,15 +39,15 @@ if (window.location.pathname.includes('home.html')) {
   checkAuth();
 }
 
-  // Função para obter um cookie pelo nome
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-        return parts.pop().split(';').shift();
-    }
-    return null;
+// Função para obter um cookie pelo nome
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+      return parts.pop().split(';').shift();
   }
+  return null;
+}
 
 document.getElementById('form-btn').addEventListener('click', async (e) => {
   e.preventDefault();
@@ -68,6 +70,13 @@ document.getElementById('form-btn').addEventListener('click', async (e) => {
     const data = await response.json();
     sessionStorage.setItem('authToken', getCookie('authToken'));
     sessionStorage.setItem('organizationCnes', getCookie('organizationCnes'));
+    // const ck = getCookie('organizationCnes')
+    //console.log(document.cookie)
+    // console.log(getCookie('authToken'))
+    // console.log(getCookie('organizationCnes'))
+    // console.log(data)
+
+    //console.log(data.message)
     
     alert(data.message);
 
