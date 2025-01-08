@@ -1,4 +1,4 @@
-import { filtro_anos, resultados_indicadores, indicadores_ans } from './data.js'
+import { filtro_anos } from './data.js'
 
 let filter_year = document.getElementById("year")
 let filter_month = document.getElementById("month")
@@ -13,6 +13,8 @@ let settings_content = document.getElementById("settings-content");
 let user_content = document.getElementById("user-content");
 let notification_content = document.getElementById("notification-content");
 let plot_id = ""
+var kpi_info = ""
+var kpi_data = ""
 const variacao_c = `<i class="fa-solid fa-angles-up fa-2xl"></i>`
 const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-2xl"></i>`
 const variacao_n = `<i class="fa-solid fa-grip-lines fa-2xl"></i>`
@@ -22,6 +24,10 @@ var operators = {
     '>' : function (a, b){ return a>b},
     '<' : function (a, b){ return a<b}
 }
+const token = sessionStorage.getItem('authToken');    
+var organization_cnes = sessionStorage.getItem('organizationCnes');  
+const KPI_URL = 'http://localhost:3000/results'
+const KPI     = 'http://localhost:3000/kpi'
 
 // POPULAR FILTRO ANO
 let content_year = `<option value="">Selecione</option>`
@@ -37,277 +43,178 @@ filter_year.addEventListener('change', (e) => {
         if (j.ano == filter_year.value) {
             for (let k of j.meses) {            
                 content_month += `<option value="${k.num}">${k.desc}</option>`
-            }
-        }
-    }    
+            };
+        };
+    };  
     filter_month.innerHTML = content_month;
-})
-
-const KPI_URL = 'http://localhost:3000/kpi-results'
-const KPI = 'http://localhost:3000/kpi'
-
+});
   
 // EXIBIR INDICADORES A PARTIR DOS FILTROS
 filter_month.addEventListener('change', async (e) => {
     let content_indicadores = `` 
-    const organization_cnes = 9876543
     const year = filter_year.value
-    const month = filter_month.value
-    const token = sessionStorage.getItem('authToken');    
+    const month = filter_month.value  
+
+    // busca informações dos indicadores
     try {
-        const response = await fetch(`${KPI_URL}`, {
-          method: 'POST',
+        const response = await fetch(`${KPI}`, {
+          //method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify({ organization_cnes, year, month }),
           credentials: 'include', // Inclui cookies na requisição
-        });    
+        });
         if (!response.ok) {
           throw new Error(`Unable o fetch data. ${response.message}`);
         }
-        const kpi_results = await response.json().message;
+        const raw_kpis = await response.json();
+        kpi_info = raw_kpis.message
     } catch (error) {
         alert('Erro: '+error.message);
     }    
 
+    // busca dados dos indicadores
     try {
-        const response = await fetch(`${KPI}`, {
-          method: 'POST',
+        const response = await fetch(`${KPI_URL}/${organization_cnes}/${year}/${month}`, {
+          //method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          //body: JSON.stringify({ organization_cnes, year, month }),
           credentials: 'include', // Inclui cookies na requisição
         });    
-        if (!response.ok) {
-          throw new Error(`Unable o fetch data. ${response.message}`);
+        if (response.status === 400) {
+            plots.innerHTML = `
+                <div class="fetch-fail">
+                    <i class="fa-solid fa-triangle-exclamation fa-2xl"></i>
+                    <h3>Nenhum dado disponível</h3>
+                    <p>Verifique se a competência em questão já foi consolidada.</p>
+                </div>
+            `
+        } else if (!response.ok) {
+          throw new Error(`Unable o fetch data. ${response.status}`);
         }
-        const kpis = await response.json();
-        console.log(kpis)
+        const raw_kpi_results = await response.json();
+        kpi_data = raw_kpi_results.message
     } catch (error) {
         alert('Erro: '+error.message);
     }  
-    
-    
-    
-    // let r = resultados_indicadores.filter(obj => {return obj.ano == filter_year.value & obj.mes == filter_month.value})    
-    // for (let p of r[0].resultados) {                
-    //     let indicador = indicadores_ans.find(obj => {return obj.id === p.id})        
-    //     let oper = operators[indicador.direcao](p.valor, indicador.meta_valor)
-    //     let cor = oper ? "#28a745" : "#dc3545"        
-    //     // VERIFICA SE O VALOR SERA EXIBIDO EM 1 OU 2 LINHAS
-    //     if (indicador.unidade == "%") {
-    //         // VERIFICA DIREÇÃO DA TENDENCIA
-    //         if (p.variacao == "c") {                
-    //             content_indicadores += `
-    //             <div class="plot" id="plot${p.id}">
-    //                 <div class="plot-header">
-    //                     <a>${indicador.titulo}</a>
-    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
-    //                 </div>         
-    //                 <div style="color:${cor};" class="plot-value">
-    //                     <h1>${p.valor}${indicador.unidade}</h1>
-    //                     ${variacao_c}
-    //                 </div>
-    //             </div>
-    //             `
-    //         } else if (p.variacao == "d") {
-    //             content_indicadores += `
-    //             <div class="plot" id="plot${p.id}">
-    //                 <div class="plot-header">
-    //                     <a>${indicador.titulo}</a>
-    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
-    //                 </div>         
-    //                 <div style="color:${cor};" class="plot-value">
-    //                     <h1>${p.valor}${indicador.unidade}</h1>
-    //                     ${variacao_d}
-    //                 </div>
-    //             </div>
-    //             `
-    //         } else {
-    //             content_indicadores += `
-    //             <div class="plot" id="plot${p.id}">
-    //                 <div class="plot-header">
-    //                     <a>${indicador.titulo}</a>
-    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
-    //                 </div>         
-    //                 <div style="color:${cor};" class="plot-value">
-    //                     <h1>${p.valor}${indicador.unidade}</h1>
-    //                     ${variacao_n}
-    //                 </div>
-    //             </div>
-    //             `
-    //         }
-    //     } else { 
-    //         if (p.variacao == "c") {
-    //             content_indicadores += `
-    //             <div class="plot" id="plot${p.id}">
-    //                 <div class="plot-header">
-    //                     <a>${indicador.titulo}</a>
-    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
-    //                 </div>         
-    //                 <div style="color:${cor};" class="plot-value">
-    //                     <div class="value">
-    //                         <h1>${p.valor}</h1>
-    //                         <p>${indicador.unidade}</p>
-    //                     </div>
-    //                     ${variacao_c}
-    //                 </div> 
-    //             </div>
-    //             `
-    //         } else if (p.variacao == "d") {
-    //             content_indicadores += `
-    //             <div class="plot" id="plot${p.id}">
-    //                 <div class="plot-header">
-    //                     <a>${indicador.titulo}</a>
-    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
-    //                 </div>         
-    //                 <div style="color:${cor};" class="plot-value">
-    //                     <div class="value">
-    //                         <h1>${p.valor}</h1>
-    //                         <p>${indicador.unidade}</p>
-    //                     </div>
-    //                     ${variacao_d}
-    //                 </div> 
-    //             </div>
-    //             `
-    //         } else {
-    //             content_indicadores += `
-    //             <div class="plot" id="plot${p.id}">
-    //                 <div class="plot-header">
-    //                     <a>${indicador.titulo}</a>
-    //                     <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
-    //                 </div>         
-    //                 <div style="color:${cor};" class="plot-value">
-    //                     <div class="value">
-    //                         <h1>${p.valor}</h1>
-    //                         <p>${indicador.unidade}</p>
-    //                     </div>
-    //                     ${variacao_n}
-    //                 </div> 
-    //             </div>
-    //             `
-    //         }
-    //     }                
-    // }
-    // plots.innerHTML = content_indicadores;
+
+    for (let i in kpi_info) {
+        const indicador = kpi_info[i]
+        const dados = kpi_data.data[`rkpi_${indicador.sequencia}`]
+        const oper = operators[indicador.direcao](dados.value.toFixed(1), indicador.meta_valor)
+        const cor = oper ? "#28a745" : "#dc3545"  
+
+        // VERIFICA SE O VALOR SERA EXIBIDO EM 1 OU 2 LINHAS
+        if (indicador.unidade == "%") {
+            // VERIFICA DIREÇÃO DA TENDENCIA
+            if (dados.variacao == "c") {                
+                content_indicadores += `
+                <div class="plot" id="plot${indicador.sequencia}">
+                    <div class="plot-header">
+                        <a>${indicador.titulo}</a>
+                        <a onClick=showDialog(true,${indicador.sequencia})><i class="fa-solid fa-circle-info fa-xl" id="indicador${indicador.sequencia}"></i></a>                            
+                    </div>         
+                    <div style="color:${cor};" class="plot-value">
+                        <h1>${dados.value.toFixed(1)}${indicador.unidade}</h1>
+                        ${variacao_c}
+                    </div>
+                </div>
+                `
+            } else if (dados.variacao == "d") {
+                content_indicadores += `
+                <div class="plot" id="plot${indicador.sequencia}">
+                    <div class="plot-header">
+                        <a>${indicador.titulo}</a>
+                        <a onClick=showDialog(true,${indicador.sequencia})><i class="fa-solid fa-circle-info fa-xl" id="indicador${indicador.sequencia}"></i></a>                            
+                    </div>         
+                    <div style="color:${cor};" class="plot-value">
+                        <h1>${dados.value.toFixed(1)}${indicador.unidade}</h1>
+                        ${variacao_d}
+                    </div>
+                </div>
+                `
+            } else {
+                content_indicadores += `
+                <div class="plot" id="plot${indicador.sequencia}">
+                    <div class="plot-header">
+                        <a>${indicador.titulo}</a>
+                        <a onClick=showDialog(true,${indicador.sequencia})><i class="fa-solid fa-circle-info fa-xl" id="indicador${indicador.sequencia}"></i></a>                            
+                    </div>         
+                    <div style="color:${cor};" class="plot-value">
+                        <h1>${dados.value.toFixed(1)}${indicador.unidade}</h1>
+                        ${variacao_n}
+                    </div>
+                </div>
+                `
+            }
+        } else { 
+            if (dados.variacao == "c") {
+                content_indicadores += `
+                <div class="plot" id="plot${indicador.sequencia}">
+                    <div class="plot-header">
+                        <a>${indicador.titulo}</a>
+                        <a onClick=showDialog(true, ${indicador.sequencia})><i class="fa-solid fa-circle-info fa-xl" id="indicador${indicador.sequencia}"></i></a>
+                    </div>         
+                    <div style="color:${cor};" class="plot-value">
+                        <div class="value">
+                            <h1>${dados.value.toFixed(1)}</h1>
+                            <p>${indicador.unidade}</p>
+                        </div>
+                        ${variacao_c}
+                    </div> 
+                </div>
+                `
+            } else if (dados.variacao == "d") {
+                content_indicadores += `
+                <div class="plot" id="plot${indicador.sequencia}">
+                    <div class="plot-header">
+                        <a>${indicador.titulo}</a>
+                        <a onClick=showDialog(true, ${indicador.sequencia})><i class="fa-solid fa-circle-info fa-xl" id="indicador${indicador.sequencia}"></i></a>
+                    </div>         
+                    <div style="color:${cor};" class="plot-value">
+                        <div class="value">
+                            <h1>${dados.value.toFixed(1)}</h1>
+                            <p>${indicador.unidade}</p>
+                        </div>
+                        ${variacao_d}
+                    </div> 
+                </div>
+                `
+            } else {
+                content_indicadores += `
+                <div class="plot" id="plot${indicador.sequencia}">
+                    <div class="plot-header">
+                        <a>${indicador.titulo}</a>
+                        <a onClick=showDialog(true, ${indicador.sequencia})><i class="fa-solid fa-circle-info fa-xl" id="indicador${indicador.sequencia}"></i></a>
+                    </div>         
+                    <div style="color:${cor};" class="plot-value">
+                        <div class="value">
+                            <h1>${dados.value.toFixed(1)}</h1>
+                            <p>${indicador.unidade}</p>
+                        </div>
+                        ${variacao_n}
+                    </div> 
+                </div>
+                `
+            }
+        }  
+    }
+    plots.innerHTML = content_indicadores;
+
 })
 
-// filter_month.addEventListener('change', async (e) => {
-//     let content_indicadores = `` 
-//     let r = resultados_indicadores.filter(obj => {return obj.ano == filter_year.value & obj.mes == filter_month.value})    
-//     for (let p of r[0].resultados) {                
-//         let indicador = indicadores_ans.find(obj => {return obj.id === p.id})        
-//         let oper = operators[indicador.direcao](p.valor, indicador.meta_valor)
-//         let cor = oper ? "#28a745" : "#dc3545"        
-//         // VERIFICA SE O VALOR SERA EXIBIDO EM 1 OU 2 LINHAS
-//         if (indicador.unidade == "%") {
-//             // VERIFICA DIREÇÃO DA TENDENCIA
-//             if (p.variacao == "c") {                
-//                 content_indicadores += `
-//                 <div class="plot" id="plot${p.id}">
-//                     <div class="plot-header">
-//                         <a>${indicador.titulo}</a>
-//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
-//                     </div>         
-//                     <div style="color:${cor};" class="plot-value">
-//                         <h1>${p.valor}${indicador.unidade}</h1>
-//                         ${variacao_c}
-//                     </div>
-//                 </div>
-//                 `
-//             } else if (p.variacao == "d") {
-//                 content_indicadores += `
-//                 <div class="plot" id="plot${p.id}">
-//                     <div class="plot-header">
-//                         <a>${indicador.titulo}</a>
-//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
-//                     </div>         
-//                     <div style="color:${cor};" class="plot-value">
-//                         <h1>${p.valor}${indicador.unidade}</h1>
-//                         ${variacao_d}
-//                     </div>
-//                 </div>
-//                 `
-//             } else {
-//                 content_indicadores += `
-//                 <div class="plot" id="plot${p.id}">
-//                     <div class="plot-header">
-//                         <a>${indicador.titulo}</a>
-//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>                            
-//                     </div>         
-//                     <div style="color:${cor};" class="plot-value">
-//                         <h1>${p.valor}${indicador.unidade}</h1>
-//                         ${variacao_n}
-//                     </div>
-//                 </div>
-//                 `
-//             }
-//         } else { 
-//             if (p.variacao == "c") {
-//                 content_indicadores += `
-//                 <div class="plot" id="plot${p.id}">
-//                     <div class="plot-header">
-//                         <a>${indicador.titulo}</a>
-//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
-//                     </div>         
-//                     <div style="color:${cor};" class="plot-value">
-//                         <div class="value">
-//                             <h1>${p.valor}</h1>
-//                             <p>${indicador.unidade}</p>
-//                         </div>
-//                         ${variacao_c}
-//                     </div> 
-//                 </div>
-//                 `
-//             } else if (p.variacao == "d") {
-//                 content_indicadores += `
-//                 <div class="plot" id="plot${p.id}">
-//                     <div class="plot-header">
-//                         <a>${indicador.titulo}</a>
-//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
-//                     </div>         
-//                     <div style="color:${cor};" class="plot-value">
-//                         <div class="value">
-//                             <h1>${p.valor}</h1>
-//                             <p>${indicador.unidade}</p>
-//                         </div>
-//                         ${variacao_d}
-//                     </div> 
-//                 </div>
-//                 `
-//             } else {
-//                 content_indicadores += `
-//                 <div class="plot" id="plot${p.id}">
-//                     <div class="plot-header">
-//                         <a>${indicador.titulo}</a>
-//                         <a onClick=showDialog(true,${p.id})><i class="fa-solid fa-circle-info fa-xl" id="indicador${p.id}"></i></a>
-//                     </div>         
-//                     <div style="color:${cor};" class="plot-value">
-//                         <div class="value">
-//                             <h1>${p.valor}</h1>
-//                             <p>${indicador.unidade}</p>
-//                         </div>
-//                         ${variacao_n}
-//                     </div> 
-//                 </div>
-//                 `
-//             }
-//         }                
-//     }
-//     plots.innerHTML = content_indicadores;
-// })
-
-// EXIBE MODAL
-function showDialog(show,kpi_id) {    
-    let info = indicadores_ans.filter(obj => {return obj.id == kpi_id})    
+// EXIBE MODAL COM INFORMAÇÕES DO INDICADOR
+function showDialog(show, kpi_id) {   
     plot_id = document.getElementById(`plot${kpi_id}`)
+    let info = kpi_info[kpi_id-1]    
     let content_modal = ``
     if (show) {
         content_modal = `        
             <div class="dialog-info-header">
-                <h4>${info[0].titulo}</h4>
+                <h4>${info.titulo}</h4>
             </div>
             <div class="dialog-info-items">
-                <p><b>Domínio:</b> ${info[0].dominio}</p>                        
-                <p style="text-align: justify;">${info[0].descricao}</p>
-                <p><b>Meta:</b> ${info[0].meta}</p>
+                <p><b>Domínio:</b> ${info.dominio}</p>                        
+                <p style="text-align: justify;">${info.descricao}</p>
+                <p><b>Meta:</b> ${info.meta_valor}</p>
             </div>        
         `        
         plot_id.classList.add("plot-focus")
@@ -329,30 +236,30 @@ dialog.addEventListener('click', (e) => {
     }
 })
 
-function showOptionsMenu() { options_content.style.display === "block" ? options_content.style.setProperty("display","none") : options_content.style.setProperty("display","block") }
-window.showOptionsMenu = showOptionsMenu
-// FECHA MENU
-options_content.addEventListener('click', (e) => {
-    options_content.style.setProperty("display","none")
-})
+// function showOptionsMenu() { options_content.style.display === "block" ? options_content.style.setProperty("display","none") : options_content.style.setProperty("display","block") }
+// window.showOptionsMenu = showOptionsMenu
+// // FECHA MENU
+// options_content.addEventListener('click', (e) => {
+//     options_content.style.setProperty("display","none")
+// })
 
-function showSettingsMenu() { settings_content.style.display === "block" ? settings_content.style.setProperty("display","none") : settings_content.style.setProperty("display","block") }
-window.showSettingsMenu = showSettingsMenu
-// FECHA MENU
-settings_content.addEventListener('click', (e) => {
-    settings_content.style.setProperty("display","none")
-})
+// function showSettingsMenu() { settings_content.style.display === "block" ? settings_content.style.setProperty("display","none") : settings_content.style.setProperty("display","block") }
+// window.showSettingsMenu = showSettingsMenu
+// // FECHA MENU
+// settings_content.addEventListener('click', (e) => {
+//     settings_content.style.setProperty("display","none")
+// })
 
-function showUserMenu() { user_content.style.display === "block" ? user_content.style.setProperty("display","none") : user_content.style.setProperty("display","block") }
-window.showUserMenu = showUserMenu
-// FECHA MENU
-user_content.addEventListener('click', (e) => {
-    user_content.style.setProperty("display","none")
-})
+// function showUserMenu() { user_content.style.display === "block" ? user_content.style.setProperty("display","none") : user_content.style.setProperty("display","block") }
+// window.showUserMenu = showUserMenu
+// // FECHA MENU
+// user_content.addEventListener('click', (e) => {
+//     user_content.style.setProperty("display","none")
+// })
 
-function showNotificationMenu() { notification_content.style.display === "block" ? notification_content.style.setProperty("display","none") : notification_content.style.setProperty("display","block") }
-window.showNotificationMenu = showNotificationMenu
-// FECHA MENU
-notification_content.addEventListener('click', (e) => {
-    notification_content.style.setProperty("display","none")
-})
+// function showNotificationMenu() { notification_content.style.display === "block" ? notification_content.style.setProperty("display","none") : notification_content.style.setProperty("display","block") }
+// window.showNotificationMenu = showNotificationMenu
+// // FECHA MENU
+// notification_content.addEventListener('click', (e) => {
+//     notification_content.style.setProperty("display","none")
+// })
