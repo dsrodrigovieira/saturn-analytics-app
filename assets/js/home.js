@@ -80,6 +80,7 @@ filter_month.addEventListener('change', async (e) => {
           credentials: 'include', // Inclui cookies na requisição
         });    
         if (response.status === 400) {
+            plots.style.setProperty("grid-template-columns","None");
             plots.innerHTML = `
                 <div class="fetch-fail">
                     <i class="fa-solid fa-triangle-exclamation fa-2xl"></i>
@@ -89,6 +90,14 @@ filter_month.addEventListener('change', async (e) => {
             `
         } else if (!response.ok) {
           throw new Error(`Unable o fetch data. ${response.status}`);
+        } else {
+            if (plots.style.getPropertyValue("grid-template-columns") === "none") {
+                if (window.innerWidth >= 1024) {
+                    plots.style.setProperty("grid-template-columns","repeat(3, 1fr)")
+                } else if (window.innerWidth >= 720) {
+                    plots.style.setProperty("grid-template-columns","repeat(2, 1fr)")
+                }
+            }
         }
         const raw_kpi_results = await response.json();
         kpi_data = raw_kpi_results.message
