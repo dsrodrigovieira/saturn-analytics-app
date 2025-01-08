@@ -1,4 +1,4 @@
-export default filtro_anos = [
+export const filtro_anos = [
     {
         ano: 2023,
         meses: [            
