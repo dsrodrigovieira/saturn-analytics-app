@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/home.css">
+    <script src="https://kit.fontawesome.com/137e779fee.js" crossorigin="anonymous"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <title>Home</title>
+</head>
+<body>
+    <div class="container min-vh-100 d-flex flex-column align-items-center">
+        <!-- Navbar -->
+        <div class="navbar container-fluid">
+            <h4 class="navbar-brand display-6" href="#">Painel de Indicadores</h4>
+            <ul class="flex-row d-flex gap-3 navbar-nav">                    
+                <li class="nav-item">
+                    <i class="fa-solid fa-circle-half-stroke"></i>
+                </li>
+                <li class="nav-item">
+                    <i class="fa-solid fa-power-off"></i>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Body -->
+        <div class="container-fluid flex-grow-1">
+            <div class="row mb-3">
+               <div class="container flex-row d-flex hstack gap-3 align-items-center">
+                    <div class="col-auto">Filtros</div>
+                    <div class="vr"></div>
+                    <div class="col-sm-auto flex-row d-flex gap-3">                        
+                        <select class="form-select text-center" aria-label="Filtro Ano" id="filter-year">
+                            <option selected>Selecione o ano</option>
+                            <option value="1">2023</option>
+                            <option value="2">2024</option>
+                        </select>
+                        <select class="form-select text-center" aria-label="Filtro Mês" id="filter-month">                                
+                            <option selected>Selecione o mês</option>
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                        </select>                        
+                    </div>
+               </div>               
+            </div>
+            
+            <div class="container align-items-center">
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button text-bg-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <h3>43.1%
+                        <small class="lead">Proporção de Partos Vaginais</small>
+                      </h3>
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <p><strong>Proporção de partos vaginais</strong></p>
+                      <p><strong>Domínio:</strong> Efetividade</p>
+                      <p><strong>Descrição:</strong> O resultado do indicador reflete o percentual de partos normais realizados na instituição no período de interesse. Percentuais maiores de parto normal são desejáveis, pois há menores taxas de complicações relacionadas.</p>
+                      <p><strong>Meta:</strong> 55%</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      <h3>7.5%
+                        <small class="lead">Proporção de reinternações em até 30 dias da saída hospitalar</small>
+                      </h3>
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <p><strong>Proporção de reinternações em até 30 dias da saída hospitalar</strong></p>
+                      <p><strong>Domínio:</strong> Efetividade</p>
+                      <p><strong>Descrição:</strong> Refere-se ao número de pacientes que tiveram uma reinternação não programada na instituição em relação ao total de saídas do mês anterior ao mês de competência. Por exemplo: na competência de janeiro houve 1.000 saídas de internações. Destas, 50 apresentaram reinternações não programadas em até 30 dias após a alta. Desta forma, a competência de fevereiro será (50/1.000) x 100, ou seja, 5 reinternações não programadas a cada 100 internações do mês de janeiro. Altas proporções de reinternações podem ser reflexo das ações não resolutivas dos atendimentos aos pacientes.</p>
+                      <p><strong>Meta:</strong> 20%</p>
+                      <h6>Estratificações</h6>
+                      <ul class="list-group col-sm-4">
+                        <li class="list-group-item"><strong>Clínico: </strong>7.49%</li>
+                        <li class="list-group-item"><strong>Cirúrgico: </strong>7.49%</li>
+                      </ul>                      
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed text-bg-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      <h3>5.5</h3>
+                      <caption>/1000 pacientes-dia</caption>
+                      <small class="lead">&nbsp;Taxa de parada cardiorrespiratória em unidade de internação</small>
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    </div>
+                  </div>
+                </div>
+              </div>              
+            </div>
+        </div>
+ 
+        <!-- Footer -->
+        <div class="container-fluid text-center">
+            <footer>
+                <p><small>Desenvolvido por Rodrigo Vieira</small></p>
+            </footer>
+        </div>        
+    </div>
+</body>
+</html>
