@@ -1,10 +1,19 @@
+* {
+    transition: all 0.3s ease-out;
+}
+
 body {
     overflow-y: hidden;
-    overflow-x: hidden;
+    overflow-x: hidden;  
+    color: #2D3E50;
 }
-.navbar-brand {
-    margin-block-start: 0;
-    margin-block-end: 0;
+
+i {
+    color: #2D3E50;
+}
+
+.modal-body > p {
+    text-align: justify;
 }
 
 ul {
@@ -12,61 +21,34 @@ ul {
     margin-bottom: 0;
 }
 
-#content-wraper {
-    position: absolute;
-    z-index: 1;
-}
-
-/* This is just to transition when you change the viewport size. */
-* {
-    transition: all 0.3s ease-out;
-}
-
-/* BACKGROUND ANIMATION */
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    50% {
-        transform: rotate(360deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
+.navbar-brand {
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 .gradient {                        
     --size: 300px;
-    --speed: 8s;
-    --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8);
-
     position: absolute;
     z-index: -1;
     width: var(--size);
     height: var(--size);
     filter: blur(calc(var(--size) / 8));
     background: linear-gradient(rgb(67, 119, 239), rgb(123, 239, 208));
-    animation: rotate var(--speed) var(--easing) alternate infinite;
     border-radius: 5% 80% 20% 30% / 30% 30% 70% 70%;
 }
 
 /* RESPONSIVE ADJUSTMENTS */
-
 @media (min-width: 720px) {
     .gradient {
         --size: 520px;
-    }
-
-    #container {
-        width: 500px;
+        width: var(--size);
+        height: var(--size);
     }
 }
 
 @media (min-width: 1024px) {
     .gradient {      
-        --size: 824px;
-
-        margin-left: 400px;
+        --size: 824px;        
         width: var(--size);
         height: var(--size);
     }
@@ -74,9 +56,7 @@ ul {
 
 @media (min-width: 1920px) {
     .gradient {      
-        --size: 1720px;
-
-        margin-left: 800px;
+        --size: 1720px;        
         width: var(--size);
         height: var(--size);
     }
