@@ -46,14 +46,20 @@
                </div>               
             </div>
             
-            <div class="container align-items-center">
+            <div class="container align-items-center overflow-y-auto">
               <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                   <h2 class="accordion-header">
                     <button class="accordion-button text-bg-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      <h3>43.1%
+                      <div class="col-md-1 text-center">
+                        <h3>43.1%</h3>
+                      </div>
+                      <div class="col-md-1 text-center">
+                        <i class="fa-solid fa-angles-up fa-xl"></i>
+                      </div>
+                      <div class="col-md-auto">
                         <small class="lead">Proporção de Partos Vaginais</small>
-                      </h3>
+                      </div>
                     </button>
                   </h2>
                   <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -68,31 +74,50 @@
                 <div class="accordion-item">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      <h3>7.5%
+                      <div class="col-md-1 text-center">
+                        <h3>7.5%</h3>
+                      </div>
+                      <div class="col-md-1 text-center">
+                        <i class="fa-solid fa-grip-lines fa-xl"></i>
+                      </div>
+                      <div class="col-md-auto">
                         <small class="lead">Proporção de reinternações em até 30 dias da saída hospitalar</small>
-                      </h3>
+                      </div>
                     </button>
                   </h2>
                   <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                      <p><strong>Proporção de reinternações em até 30 dias da saída hospitalar</strong></p>
-                      <p><strong>Domínio:</strong> Efetividade</p>
-                      <p><strong>Descrição:</strong> Refere-se ao número de pacientes que tiveram uma reinternação não programada na instituição em relação ao total de saídas do mês anterior ao mês de competência. Por exemplo: na competência de janeiro houve 1.000 saídas de internações. Destas, 50 apresentaram reinternações não programadas em até 30 dias após a alta. Desta forma, a competência de fevereiro será (50/1.000) x 100, ou seja, 5 reinternações não programadas a cada 100 internações do mês de janeiro. Altas proporções de reinternações podem ser reflexo das ações não resolutivas dos atendimentos aos pacientes.</p>
-                      <p><strong>Meta:</strong> 20%</p>
-                      <h6>Estratificações</h6>
-                      <ul class="list-group col-sm-4">
-                        <li class="list-group-item"><strong>Clínico: </strong>7.49%</li>
-                        <li class="list-group-item"><strong>Cirúrgico: </strong>7.49%</li>
-                      </ul>                      
+                      <div class="row">
+                      <div class="col-md-8">
+                        <p><strong>Proporção de reinternações em até 30 dias da saída hospitalar</strong></p>
+                        <p><strong>Domínio:</strong> Efetividade</p>
+                        <p><strong>Descrição:</strong> Refere-se ao número de pacientes que tiveram uma reinternação não programada na instituição em relação ao total de saídas do mês anterior ao mês de competência. Por exemplo: na competência de janeiro houve 1.000 saídas de internações. Destas, 50 apresentaram reinternações não programadas em até 30 dias após a alta. Desta forma, a competência de fevereiro será (50/1.000) x 100, ou seja, 5 reinternações não programadas a cada 100 internações do mês de janeiro. Altas proporções de reinternações podem ser reflexo das ações não resolutivas dos atendimentos aos pacientes.</p>
+                        <p><strong>Meta:</strong> 20%</p>
+                      </div>
+                      <div class="col-md-4">
+                        <h6>Estratificações</h6>
+                        <ul class="list-group">
+                          <li class="list-group-item"><strong>Clínico: </strong>7.49%</li>
+                          <li class="list-group-item"><strong>Cirúrgico: </strong>7.49%</li>
+                        </ul>
+                      </div>
+                      </div>                      
                     </div>
                   </div>
                 </div>
                 <div class="accordion-item">
                   <h2 class="accordion-header">
                     <button class="accordion-button collapsed text-bg-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                      <h3>5.5</h3>
-                      <caption>/1000 pacientes-dia</caption>
-                      <small class="lead">&nbsp;Taxa de parada cardiorrespiratória em unidade de internação</small>
+                      <div class="col-md-1 text-center multiline">
+                        <h3>5.5</h3>
+                        <small>/1000 pac.-dia</small>
+                      </div>
+                      <div class="col-md-1 text-center">
+                        <i class="fa-solid fa-angles-up fa-rotate-180 fa-xl"></i>
+                      </div>
+                      <div class="col-md-auto">
+                        <small class="lead">Taxa de parada cardiorrespiratória em unidade de internação</small>
+                      </div>
                     </button>
                   </h2>
                   <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
