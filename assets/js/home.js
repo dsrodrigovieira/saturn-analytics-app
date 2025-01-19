@@ -28,7 +28,7 @@ window.addEventListener("load", () => {
         setTimeout(() => {
             toast.classList.replace("show", "hide");
         }, 5000);
-        sessionStorage.setItem('toast', True); 
+        sessionStorage.setItem('toast', true); 
     };
 });
 
