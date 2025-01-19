@@ -19,6 +19,26 @@ h1, h3, h6 {
     color: #000;
 }
 
+li.nav-item {
+    cursor: pointer;
+}
+
+.fetch-fail h3 {
+    padding-top: 10px;
+}
+
+.fetch-fail i {
+    font-size: 3.5rem;
+}
+
+.fetch-fail p {
+    font-size: 0.7rem;
+}
+
+.multiline > small{
+    font-size: 0.8rem;
+}
+
 .loading {
     animation: loading 0.8s infinite alternate;
 }
@@ -39,5 +59,15 @@ h1, h3, h6 {
     }
     100%{
         opacity: 0;
+    }
+}
+
+@media (min-width: 510px) {
+    .fetch-fail p {
+        font-size: 1rem;
+    }  
+    
+    .title {
+        font-size: 1.5rem !important;
     }
 }
