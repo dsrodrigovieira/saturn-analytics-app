@@ -58,8 +58,7 @@ window.addEventListener('resize', () => {
 
 // LOGOFF
 btn_logout.addEventListener('click', async () => {
-    await fetch(LOGOUT_URL,
-                { method: 'POST', credentials: 'include' });
+    await fetch(LOGOUT_URL, { method: 'POST', credentials: 'include' });
     alert('Logout realizado com sucesso!');
     window.location.href = 'index.html';
 });
@@ -86,6 +85,14 @@ filter_year.addEventListener('change', (e) => {
   
 // EXIBIR INDICADORES A PARTIR DOS FILTROS
 filter_month.addEventListener('change', async (e) => {
+
+    // EXIBE SPINNER DE CARREGAMENTO
+    content_wrapper.innerHTML = `
+    <div class="flex-line text-center position-fixed top-50 start-50 translate-middle">
+        <span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span>
+        <h6>Carregando...</h6>
+    </div>
+    `;
     let content_indicadores = ``;    
     const year = filter_year.value;
     const month = filter_month.value;
