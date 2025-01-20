@@ -233,7 +233,7 @@ filter_month.addEventListener('change', async (e) => {
                     </div>
                     <div id="collapse${indicador.sequencia}" class="accordion-collapse collapse" data-bs-parent="#accordion-results">
                     <div class="accordion-body">
-                        <p><strong>${indicador.titulo}</strong></p>
+                        <p><strong>Indicador #${indicador.sequencia} - ${indicador.titulo}</strong></p>
                         <div class="vstack gap-2">
                         <div class="row">
                             <div class="col-md-8">
