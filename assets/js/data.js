@@ -32,8 +32,7 @@ export const filtro_anos = [
         ]
     }
 ];
-// export const API_URL = "https://saturn-api.vercel.app";
-export const API_URL = "http://localhost:3000";
+export const API_URL = "https://saturn-api.vercel.app";
 export const KPI_RESULTS_URL = API_URL+"/resultados";
 export const KPI_INFO_URL = API_URL+"/kpi";
 export const LOGOUT_URL = API_URL+"/sair";

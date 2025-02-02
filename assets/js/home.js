@@ -183,29 +183,7 @@ filter_month.addEventListener('change', async (e) => {
                 };
 
                 // ANÁLISE CRÍTICA DO INDICADOR - em desenvolvimento
-                let content_analysis = "";
-                if(indicador.sequencia % 2 == 1){
-                    content_analysis = `
-                    <div>
-                        <div><p><strong>Análise do Indicador de Proporção de Partos Vaginais</strong></p></div>
-                        <div>
-                            <div>
-                                <ul>
-                                    <li><strong>Competência atual:</strong> O indicador do mês 6 está abaixo da meta estabelecida de ≥ 55%, com um valor de 57.5%.</li>
-                                    <li><strong>Tendência:</strong> Observa-se uma variação nos resultados do indicador ao longo dos últimos 6 meses. O valor inicial de 43.06% no mês 1 apresentou uma alta expressiva no mês 2 chegando a 68,45%, seguido de uma queda no mês 3 (65.34%) e mês 4 (41,4%), uma recuperação no mês 5 (58.02%), e novamente uma queda no mês 6 (57.5%). Essa oscilação indica uma instabilidade na taxa de partos vaginais, com momentos de melhor desempenho e outros de pior. A documentação aponta que taxas mais altas de partos vaginais são desejáveis, pois estão associadas a menores taxas de complicações.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <p>O resultado do mês 6, embora esteja acima de 55%, mostra uma pequena redução em relação ao mês anterior. Sendo assim, o resultado indica que a instituição está realizando mais partos cesáreos do que o desejado. Uma vez que a documentação indica que um percentual maior de partos vaginais é desejável para reduzir o número de complicações, é importante investigar os fatores que estão influenciando essa variação e monitorar de perto a evolução do indicador nos próximos meses. </p>
-                            </div>
-                        </div>
-                        <div style="color: #999;">
-                            <span class="material-icons" style="font-size: small;">auto_awesome</span><small> Gerado com IA do Google Gemini</small>
-                        </div>
-                    </div>
-                    `;
-                } else {
-                    content_analysis = `
+                let content_analysis = `
                     <div class="flex-row d-flex load-ai align-items-center">
                         <div><span class="material-icons">auto_awesome</span></div>
                         <div>
@@ -217,7 +195,6 @@ filter_month.addEventListener('change', async (e) => {
                         </div>
                     </div>
                     `;
-                };
 
                 // MONTA O HTML DOS INDICADORES COM BOOTSTRAP ACCORDION
                 content_indicadores += `                
