@@ -1,4 +1,4 @@
-import { filtro_anos, operators, variacao, LOGOUT_URL, KPI_INFO_URL, KPI_RESULTS_URL } from './data.js';
+import { filtro_anos, operadores, variacao, LOGOUT_URL, KPI_INFO_URL, KPI_RESULTS_URL } from './data.js';
 
 let filter_year = document.getElementById("filter-year");
 let filter_month = document.getElementById("filter-month");
@@ -8,7 +8,7 @@ let toast_wrapper = document.getElementById("toast-wrapper");
 const btn_logout = document.getElementById("btn-logout");
 var kpi_info = "";
 var kpi_data = "";
-var organization_cnes = sessionStorage.getItem('organizationCnes');  
+var cnes = sessionStorage.getItem('cnesEmpresa');  
 var message = sessionStorage.getItem('message');  
 
 // TOAST DE BOAS VINDAS
@@ -59,6 +59,7 @@ window.addEventListener('resize', () => {
 // LOGOFF
 btn_logout.addEventListener('click', async () => {
     await fetch(LOGOUT_URL, { method: 'POST', credentials: 'include' });
+    sessionStorage.clear();
     alert('Logout realizado com sucesso!');
     window.location.href = 'index.html';
 });
@@ -110,11 +111,11 @@ filter_month.addEventListener('change', async (e) => {
         kpi_info = raw_kpis.message;
     } catch (error) {
         alert('Erro: '+error.message);
-    };   
-
+    };  
+    
     // CONSULTA API POR DADOS DOS INDICADORES
     try {
-        const response = await fetch(`${KPI_RESULTS_URL}/${organization_cnes}/${year}/${month}`, {
+        const response = await fetch(`${KPI_RESULTS_URL}/${cnes}/${year}/${month}`, {
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include'
         });   
@@ -134,20 +135,21 @@ filter_month.addEventListener('change', async (e) => {
             // MONTA O HTML COM OS DADOS DOS INDICADORES
             const raw_kpi_results = await response.json();
             kpi_data = raw_kpi_results.message;
+
             for (let i in kpi_info) {
                 const indicador = kpi_info[i];
-                const dados = kpi_data.data[`rkpi_${indicador.sequencia}`];
-                const oper = operators[indicador.direcao](dados.value.toFixed(1), indicador.meta_valor);
+                const dados = kpi_data.dados[`rkpi_${indicador.sequencia}`];
+                const oper = operadores[indicador.direcao](dados.valor.toFixed(1), indicador.meta_valor);
                 const cor = oper ? "text-bg-success" : "text-bg-danger";
                 let content_estratification = "";
 
                 // VERIFICA SE O INDICADOR POSSUI ESTRATIFICAÇÃO
-                if (dados.estratification.length == 0) {
+                if (dados.estratificacao.length == 0) {
                     content_estratification = `<li class="list-group-item">Não se aplica</li>`;
                 } else {
-                    for (let j of dados.estratification) {
+                    for (let j of dados.estratificacao) {
                         content_estratification += `
-                            <li class="list-group-item"><strong>${j.type}: </strong>${j.value.toFixed(1)} ${indicador.unidade}</li>
+                            <li class="list-group-item"><strong>${indicador.estratificacoes[0][j.tipo]}: </strong>${j.valor.toFixed(1)} ${indicador.unidade}</li>
                         `;
                     };
                 };
@@ -157,24 +159,24 @@ filter_month.addEventListener('change', async (e) => {
                 if (indicador.unidade == "%") {
                     content_value = `
                         <div class="col-lg-1 col-2 text-center">
-                            <h3>${dados.value.toFixed(1)}${indicador.unidade}</h3>
+                            <h3>${dados.valor.toFixed(1)}${indicador.unidade}</h3>
                         </div>`;
                 } else if (indicador.unidade == "Número absoluto") {
                     content_value = `
                         <div class="col-lg-1 col-2 text-center">
-                            <h3>${dados.value.toFixed(1)}</h3>
+                            <h3>${dados.valor.toFixed(1)}</h3>
                         </div>`;
                 } else if (indicador.unidade == "/1000 pacientes-dia") {
                     content_value = `
                     <div class="col-lg-1 col-2 text-center multiline">
-                        <h3>${dados.value.toFixed(1)}</h3>
+                        <h3>${dados.valor.toFixed(1)}</h3>
                         <small>/1000 pac.-dia</small>
                     </div>
                     `;
                 } else {
                     content_value = `
                     <div class="col-lg-1 col-2 text-center multiline">
-                        <h3>${dados.value.toFixed(1)}</h3>
+                        <h3>${dados.valor.toFixed(1)}</h3>
                         <small>${indicador.unidade}</small>
                     </div>
                     `;
@@ -224,7 +226,7 @@ filter_month.addEventListener('change', async (e) => {
                     <button class="accordion-button ${cor}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${indicador.sequencia}" aria-expanded="false" aria-controls="collapse${indicador.sequencia}">
                         ${content_value}
                         <div class="col-lg-1 col-2 text-center">
-                            ${variacao[dados.variation]}
+                            ${variacao[dados.variacao]}
                         </div>
                         <div class="col-lg-8 col-6">
                             <small class="lead title">${indicador.titulo}</small>

@@ -8,6 +8,21 @@ body {
     color: #2D3E50;
 }
 
+#btn-div > button:first-of-type {
+    background-color: #2F4156;
+    color: #F5EFEB;
+    border-color: #2F4156;
+}
+
+#btn-div > button:first-of-type:hover {
+    background-color: #567C8D;
+    border-color: #567C8D;
+}
+
+#btn-div > button:last-of-type {
+    color: #2F4156;
+}
+
 i {
     color: #2D3E50;
 }

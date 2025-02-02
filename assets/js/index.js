@@ -9,7 +9,7 @@ const content_toast = `
     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
   </div>
   <div class="toast-body bg-warning">
-    Houve uma falha no login. Por favor, tente novamente.
+    Houve uma falha no login. Por favor, tente novamente.    
   </div>
 </div>
 `;
@@ -26,11 +26,25 @@ btn_enter.addEventListener('click', async (e) => {
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include'
     });
+    console.log(response);
     if (!response.ok) {
+      btn_enter.innerHTML = `Entrar`
+      //toast.innerHTML = content_toast;
+      toast.innerHTML = `
+<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+    <strong class="me-auto">Falha no login</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  <div class="toast-body bg-warning">
+    Houve uma falha no login. Por favor, tente novamente.${response.message}
+  </div>
+</div>
+`;
       throw new Error(`Falha no login. ${response.message}`);
     }
     const data = await response.json();
-    sessionStorage.setItem('organizationCnes', data.cnes);    
+    sessionStorage.setItem('cnesEmpresa', data.cnes);    
     sessionStorage.setItem('message', data.message);
     window.location.href = 'home.html';      
   } catch (error) {

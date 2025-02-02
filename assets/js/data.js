@@ -32,23 +32,24 @@ export const filtro_anos = [
         ]
     }
 ];
-export const API_URL = "https://saturn-api.vercel.app";
-export const KPI_RESULTS_URL = API_URL+"/results";
+// export const API_URL = "https://saturn-api.vercel.app";
+export const API_URL = "http://localhost:3000";
+export const KPI_RESULTS_URL = API_URL+"/resultados";
 export const KPI_INFO_URL = API_URL+"/kpi";
-export const LOGOUT_URL = API_URL+"/logout";
+export const LOGOUT_URL = API_URL+"/sair";
 export const LOGIN_DEMO_URL = API_URL+"/auth/demo";
-export const AUTH_VALIDATION_URL = API_URL+"/auth/validade";
-export const operators = {
+export const AUTH_VALIDATION_URL = API_URL+"/auth/validar";
+export const operadores = {
     '>=': function (a, b){ return a>=b },
     '<=': function (a, b){ return a<=b },
     '>' : function (a, b){ return a>b },
     '<' : function (a, b){ return a<b }
 };
-export const variacao_c = `<i class="fa-solid fa-angles-up fa-xl"></i>`;
-export const variacao_d = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-xl"></i>`;
-export const variacao_n = `<i class="fa-solid fa-grip-lines fa-xl"></i>`;
+export const variacao_crescente = `<i class="fa-solid fa-angles-up fa-xl"></i>`;
+export const variacao_decrescente = `<i class="fa-solid fa-angles-up fa-rotate-180 fa-xl"></i>`;
+export const variacao_na = `<i class="fa-solid fa-circle fa-2xs"></i>`;
 export const variacao = {
-    c: variacao_c,
-    d: variacao_d,
-    n: variacao_n
+    1: variacao_crescente,
+    0: variacao_decrescente,
+    "": variacao_na
 };
