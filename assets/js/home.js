@@ -124,9 +124,10 @@ filter_month.addEventListener('change', async (e) => {
             // VERIFICA SE A COMPETÊNCIA JÁ FOI CONSOLIDADA
             res = `
                 <div class="container-fluid text-center h-100 align-content-center fetch-fail">
-                <i class="fa-solid fa-triangle-exclamation fa-2xl"></i>
+                <i class="fa-solid fa-triangle-exclamation fa-2xl fa-custom"></i>
                 <h3>Nenhum dado disponível</h3>
                 <p>Verifique se a competência em questão já foi consolidada.</p>
+                <a href="https://saturn-analytics-client.streamlit.app/?cnes=${cnes}&ano=${year}" target="_blank">Consulte o calendário de consolidação <i class="fa-solid fa-arrow-up-right-from-square fa-2xs"></i></a>
                 </div>
             `;
         } else if (!response.ok) {

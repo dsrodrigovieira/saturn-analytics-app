@@ -31,8 +31,13 @@ li.nav-item {
     padding-top: 10px;
 }
 
-.fetch-fail i {
+.fetch-fail i .fa-custom {
     font-size: 3.5rem;
+}
+
+.fetch-fail a {
+    text-decoration: none;
+    color: #000;
 }
 
 .fetch-fail p {
